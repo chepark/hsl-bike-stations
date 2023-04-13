@@ -67,3 +67,15 @@ export const applyFilter = (
     }
   });
 };
+
+// add search
+export const applySearch = (
+  queryBuilder: SelectQueryBuilder<Journey>,
+  searchQuery: string | null
+) => {
+  queryBuilder
+    .where("CAST(journey.id AS TEXT) LIKE :id", {
+      id: `%${searchQuery}%`,
+    })
+    .orderBy("journey.id", "ASC");
+};
