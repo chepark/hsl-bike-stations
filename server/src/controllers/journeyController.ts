@@ -4,6 +4,7 @@ import { Journey } from "../db/entity/Journey";
 import {
   applyFilter,
   applyPagination,
+  applySearch,
   applySort,
   FilterParams,
 } from "../services/journeyService";
@@ -11,6 +12,7 @@ import {
 export const getJourneys = async (req: Request, res: Response) => {
   const page: number = parseInt(req.query.page as string) || 0; // default offset is 0 if not provided
   const sort = (req.query.sort as string) || "journey.id";
+  const search = (req.query.search as string | null) || null;
   const filters: FilterParams = {
     departure: (req.query.departure as string | null) || null,
     return: (req.query.return as string | null) || null,
@@ -18,7 +20,7 @@ export const getJourneys = async (req: Request, res: Response) => {
     distance: (req.query.distance as string | null) || null,
   };
 
-  const queryBuilder = await AppDataSource.getRepository(Journey)
+  const queryBuilder = AppDataSource.getRepository(Journey)
     .createQueryBuilder("journey")
     .leftJoin("journey.route", "route")
     .leftJoin("route.startingStation", "startingStation")
@@ -35,6 +37,7 @@ export const getJourneys = async (req: Request, res: Response) => {
 
   applyPagination(queryBuilder, page);
   applySort(queryBuilder, sort);
+  applySearch(queryBuilder, search);
   applyFilter(queryBuilder, filters);
 
   const journeys = await queryBuilder.getRawMany();

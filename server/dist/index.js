@@ -5,25 +5,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 require("reflect-metadata");
+const cors_1 = __importDefault(require("cors"));
 const data_source_js_1 = require("./db/data-source.js");
-const Journey_js_1 = require("./db/entity/Journey.js");
+const journeyRoutes_js_1 = require("./routes/journeyRoutes.js");
+const stationRoutes_js_1 = require("./routes/stationRoutes.js");
 const port = 8000;
 const app = (0, express_1.default)();
+// connect to database
 data_source_js_1.AppDataSource.initialize()
     .then(() => {
-    console.log("Database connection established");
+    console.log("DB connected");
 })
     .catch((err) => {
-    console.error("Error during DataSourceInitialization", err);
+    console.error("Error in DB connection: ", err);
 });
-app.get("/", (req, res) => {
-    res.send("Hello World");
-    const t = data_source_js_1.AppDataSource.getRepository(Journey_js_1.Journey);
-    t.find().then((stations) => {
-        console.log("---------------------------");
-        console.log(stations);
-    });
-});
+// middleware
+app.use((0, cors_1.default)());
+app.use(journeyRoutes_js_1.journeyRoutes);
+app.use(stationRoutes_js_1.stationRoutes);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

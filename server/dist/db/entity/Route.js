@@ -24,6 +24,10 @@ __decorate([
     __metadata("design:type", Number)
 ], Route.prototype, "journey_id", void 0);
 __decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Route.prototype, "distance_meter", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => Station_1.Station, (station) => station.startingRoutes, {
         onDelete: "SET NULL",
     }),

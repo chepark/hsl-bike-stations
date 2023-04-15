@@ -17,6 +17,9 @@ export class Route {
   @Column()
   journey_id: number;
 
+  @Column()
+  distance_meter: number;
+
   @ManyToOne(() => Station, (station) => station.startingRoutes, {
     onDelete: "SET NULL",
   })
