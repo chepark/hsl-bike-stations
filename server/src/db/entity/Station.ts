@@ -12,10 +12,10 @@ export class Station {
   @Column({ nullable: true })
   address: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: "decimal", precision: 10, scale: 6 })
   latitude: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: "decimal", precision: 10, scale: 6 })
   longitude: number;
 
   @OneToMany(() => Route, (route) => route.startingStation)
