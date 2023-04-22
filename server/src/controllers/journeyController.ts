@@ -7,7 +7,18 @@ import {
   applySearch,
   applySort,
   FilterParams,
+  mergeRouteToSavedJourney,
+  saveNewJourney,
 } from "../services/journeyService";
+import { Station } from "../db/entity/Station";
+import { Route } from "../db/entity/Route";
+import { durationCalculator } from "../lib/durationCalculator";
+import { distanceCalculator } from "../lib/distanceCalculator";
+import {
+  findStationById,
+  stationCoordinates,
+} from "../services/stationService";
+import { saveNewRoute } from "../services/routeService";
 
 export const getJourneys = async (req: Request, res: Response) => {
   const page: number = parseInt(req.query.page as string) || 0; // default offset is 0 if not provided
@@ -42,6 +53,8 @@ export const getJourneys = async (req: Request, res: Response) => {
 
   const journeys = await queryBuilder.getRawMany();
 
+  //! add function to handle no result found
+
   res.json({
     success: true,
     message: `Retrieved journeys successfully.`,
@@ -53,4 +66,34 @@ export const getJourneys = async (req: Request, res: Response) => {
 
 export const getJourney = async (req: Request, res: Response) => {};
 
-export const addJourney = async (req: Request, res: Response) => {};
+export const addJourney = async (req: Request, res: Response) => {
+  const { started_at, ended_at, startingStation, endingStation } = req.body;
+
+  // Find the starting and ending stations by their IDs
+  const startingStationObj = await findStationById(startingStation);
+  const endingStationObj = await findStationById(endingStation);
+  const startCoordinates = await stationCoordinates(startingStationObj);
+  const endCoordinates = await stationCoordinates(endingStationObj);
+  let duration_sec: number;
+  let distance_meter: number;
+
+  if (!startCoordinates || !endCoordinates) {
+    res.status(500).json({
+      message: "cannot find coordinates of starting/ending station",
+    });
+  } else if (startCoordinates && endCoordinates) {
+    duration_sec = durationCalculator(started_at, ended_at);
+    distance_meter = distanceCalculator(startCoordinates, endCoordinates);
+
+    const newJourney = { started_at, ended_at, duration_sec };
+    const savedJourney = await saveNewJourney(newJourney);
+
+    const newRoute = {
+      startingStation,
+      endingStation,
+      distance_meter,
+    };
+
+    const savedRoute = await saveNewRoute(newRoute, savedJourney);
+  }
+};

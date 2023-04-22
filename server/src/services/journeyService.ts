@@ -1,5 +1,7 @@
 import { SelectQueryBuilder } from "typeorm";
 import { Journey } from "../db/entity/Journey";
+import { AppDataSource } from "../db/data-source";
+import { Route } from "../db/entity/Route";
 
 export const applyPagination = (
   queryBuilder: SelectQueryBuilder<Journey>,
@@ -68,7 +70,6 @@ export const applyFilter = (
   });
 };
 
-// add search
 export const applySearch = (
   queryBuilder: SelectQueryBuilder<Journey>,
   searchQuery: string | null
@@ -78,4 +79,29 @@ export const applySearch = (
       id: `%${searchQuery}%`,
     })
     .orderBy("journey.id", "ASC");
+};
+
+interface NewJourneyData {
+  started_at: string;
+  ended_at: string;
+  duration_sec: number;
+  id?: number;
+}
+
+export const saveNewJourney = async (data: NewJourneyData) => {
+  const journeyRepository = AppDataSource.getRepository(Journey);
+
+  // get latest journey id and increment by 1 to use as new journey id
+  const latestJourney = await journeyRepository.findOne({
+    where: {},
+    order: { id: "DESC" },
+  });
+
+  const journeyId = latestJourney ? latestJourney.id + 1 : 1;
+  data.id = journeyId;
+
+  const journey = journeyRepository.create(data);
+  const result = await journeyRepository.save(journey);
+
+  return result;
 };
