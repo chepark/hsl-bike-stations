@@ -14,10 +14,10 @@ export class Route {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  journey_id: number;
+  // @Column()
+  // journey_id: number;
 
-  @Column()
+  @Column({ nullable: true })
   distance_meter: number;
 
   @ManyToOne(() => Station, (station) => station.startingRoutes, {
@@ -33,5 +33,6 @@ export class Route {
   endingStation: Station; // Many-to-one relationship with Station entity
 
   @OneToOne(() => Journey, (journey) => journey.route)
+  @JoinColumn({ name: "journey_id" })
   journey: Journey; // One-to-one relationship with Journey entity
 }
