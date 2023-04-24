@@ -1,6 +1,7 @@
 import { SelectQueryBuilder } from "typeorm";
 import { Station } from "../db/entity/Station";
 import { Route } from "../db/entity/Route";
+import { AppDataSource } from "../db/data-source";
 
 // pagination
 export const applyPagination = (
@@ -104,6 +105,37 @@ export const getStationDetail = async (
     top5endingStations,
     top5startingStations,
   };
+};
+
+export const findStationById = async (stationId: number) => {
+  const stationRepository = AppDataSource.getRepository(Station);
+  const stationObject = await stationRepository.findBy({
+    id: stationId,
+  });
+
+  return stationObject[0];
+};
+
+interface StationObject {
+  id: number;
+  name: string;
+  address?: string;
+  longitude?: number;
+  latitude?: number;
+}
+
+export const stationCoordinates = async (stationObj: StationObject) => {
+  if (!stationObj.longitude && !stationObj.latitude) {
+    return null;
+  }
+
+  let { longitude, latitude } = stationObj;
+  longitude = Number(longitude);
+  latitude = Number(latitude);
+
+  const coordinates = { longitude, latitude };
+
+  return coordinates;
 };
 
 // return stations showing on the map
