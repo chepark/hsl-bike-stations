@@ -138,5 +138,20 @@ export const stationCoordinates = async (stationObj: StationObject) => {
   return coordinates;
 };
 
+interface NewStation {
+  id: number;
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+}
+
+export const saveNewStation = async (newStation: NewStation) => {
+  const stationRepository = AppDataSource.getRepository(Station);
+  const station = stationRepository.create(newStation);
+  const result = await stationRepository.save(station);
+
+  return result;
+};
 // return stations showing on the map
 // - based on the current map location of the user

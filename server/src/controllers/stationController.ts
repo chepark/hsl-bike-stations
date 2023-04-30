@@ -4,7 +4,9 @@ import { Station } from "../db/entity/Station";
 import {
   applyPagination,
   applySearch,
+  findStationById,
   getStationDetail,
+  saveNewStation,
 } from "../services/stationService";
 import { Route } from "../db/entity/Route";
 import { addressGeocode } from "../lib/addressGeocode";
@@ -54,20 +56,8 @@ export const getStationById = async (req: Request, res: Response) => {
 export const addStation = async (req: Request, res: Response) => {
   const { id, name, address } = req.body;
 
-  // import addressGeocode from "../lib/addressGeocode";
-  // it convers address to coordinates
-  // const {latitude, longitude} = addressGeocode(address: string)
-
-  const latitude = 0;
-  const longitude = 0;
-
-  const newStation = { id, name, address, latitude, longitude };
-  const stationRepository = AppDataSource.getRepository(Station);
-
   // find by id if station already exists
-  const savedStation = await stationRepository.findOne({
-    where: { id },
-  });
+  const savedStation = await findStationById(id);
 
   if (savedStation) {
     return res.json({
@@ -76,8 +66,10 @@ export const addStation = async (req: Request, res: Response) => {
     });
   }
 
-  const station = stationRepository.create(newStation);
-  const result = await stationRepository.save(station);
+  // getting latitude and longitude from address
+  const { latitude, longitude } = await addressGeocode(address);
+  const newStation = { id, name, address, latitude, longitude };
+  const result = await saveNewStation(newStation);
 
   res.json({
     success: true,
