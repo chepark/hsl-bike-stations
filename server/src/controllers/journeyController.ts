@@ -7,11 +7,8 @@ import {
   applySearch,
   applySort,
   FilterParams,
-  mergeRouteToSavedJourney,
   saveNewJourney,
 } from "../services/journeyService";
-import { Station } from "../db/entity/Station";
-import { Route } from "../db/entity/Route";
 import { durationCalculator } from "../lib/durationCalculator";
 import { distanceCalculator } from "../lib/distanceCalculator";
 import {
@@ -22,7 +19,7 @@ import { saveNewRoute } from "../services/routeService";
 
 export const getJourneys = async (req: Request, res: Response) => {
   const page: number = parseInt(req.query.page as string) || 0; // default offset is 0 if not provided
-  const sort = (req.query.sort as string) || "journey.id";
+  const sort = (req.query.sort as string) || "journey.id"; // default sort parameter is journey.id if not provided
   const search = (req.query.search as string | null) || null;
   const filters: FilterParams = {
     departure: (req.query.departure as string | null) || null,
@@ -47,9 +44,9 @@ export const getJourneys = async (req: Request, res: Response) => {
     ]);
 
   applyPagination(queryBuilder, page);
-  applySort(queryBuilder, sort);
-  applySearch(queryBuilder, search);
-  applyFilter(queryBuilder, filters);
+  if (sort) applySort(queryBuilder, sort);
+  if (search) applySearch(queryBuilder, search);
+  if (filters) applyFilter(queryBuilder, filters);
 
   const journeys = await queryBuilder.getRawMany();
 
