@@ -15,7 +15,7 @@ const Route_1 = require("./Route");
 let Station = class Station {
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, typeorm_1.PrimaryColumn)(),
     __metadata("design:type", Number)
 ], Station.prototype, "id", void 0);
 __decorate([
@@ -27,11 +27,11 @@ __decorate([
     __metadata("design:type", String)
 ], Station.prototype, "address", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true, type: "decimal", precision: 10, scale: 6 }),
     __metadata("design:type", Number)
 ], Station.prototype, "latitude", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true, type: "decimal", precision: 10, scale: 6 }),
     __metadata("design:type", Number)
 ], Station.prototype, "longitude", void 0);
 __decorate([

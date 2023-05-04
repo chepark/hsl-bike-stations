@@ -1,6 +1,8 @@
-import express, { Express, Request, Response } from "express";
 import "reflect-metadata";
+import bodyParser from "body-parser";
 import dotenv from "dotenv";
+dotenv.config();
+import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import { AppDataSource } from "./db/data-source.js";
 import { Journey } from "./db/entity/Journey.js";
@@ -22,7 +24,13 @@ AppDataSource.initialize()
   });
 
 // middleware
+
 app.use(cors());
+app.use(bodyParser.json());
+
+// ! remove later
+// ! study about 304 error code and change to other solution.
+app.disable("etag");
 
 app.use(journeyRoutes);
 app.use(stationRoutes);

@@ -20,11 +20,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Route.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Route.prototype, "journey_id", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
 ], Route.prototype, "distance_meter", void 0);
 __decorate([
@@ -43,6 +39,7 @@ __decorate([
 ], Route.prototype, "endingStation", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => Journey_1.Journey, (journey) => journey.route),
+    (0, typeorm_1.JoinColumn)({ name: "journey_id" }),
     __metadata("design:type", Journey_1.Journey)
 ], Route.prototype, "journey", void 0);
 Route = __decorate([
