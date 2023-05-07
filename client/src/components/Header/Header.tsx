@@ -35,7 +35,7 @@ const Header = () => {
         </div>
 
         {/* Mobile */}
-        <div className="container flex items-center justify-between text-white md:hidden">
+        <div className="flex items-center justify-between px-3 text-white md:hidden">
           <div className="flex items-center gap-x-2">
             <BikeIcon />
             <div className="">Helsinki City Bike</div>
@@ -50,7 +50,7 @@ const Header = () => {
         </div>
       </div>
       {showMobileMenu && (
-        <div className="text-blue">
+        <div className="text-blue md:hidden">
           <ul onClick={() => setShowMobileMenu(false)}>
             <li className="flex flex-row items-center justify-between px-3 py-4 border-b-2 border-light-gray-100 hover:bg-light-gray-50">
               <Link to="journeys">Journeys</Link>
