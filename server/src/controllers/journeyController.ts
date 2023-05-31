@@ -43,7 +43,9 @@ export const getJourneys = async (req: Request, res: Response) => {
       "route.distance_meter",
     ]);
 
-  applyPagination(queryBuilder, page);
+  // Apply pagination and get toal pages
+  const totalPages = await applyPagination(queryBuilder, page);
+
   if (sort) applySort(queryBuilder, sort);
   if (search) applySearch(queryBuilder, search);
   if (filters) applyFilter(queryBuilder, filters);
@@ -56,7 +58,8 @@ export const getJourneys = async (req: Request, res: Response) => {
     success: true,
     message: `Retrieved journeys successfully.`,
     data: {
-      journeys: journeys,
+      totalPages,
+      journeys,
     },
   });
 };

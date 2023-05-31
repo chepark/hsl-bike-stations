@@ -10,13 +10,14 @@ import {
   selectJourneysStatus,
   selectJourneysTotalPages,
 } from "./journeysSlice";
+import Pagination from "../Pagination/Pagination";
 
-const Journeys = () => {
+const Journeys: React.FC = () => {
   // update table when user changes search query, filter, sort, page
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState("");
-  const [page, setPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const journeys = useAppSelector(selectAllJourneys);
   const journeysStatus = useAppSelector(selectJourneysStatus);
@@ -25,11 +26,11 @@ const Journeys = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    console.log("journey", journeysStatus);
     if (journeysStatus === "loading") {
-      dispatch(fetchJourneys());
+      dispatch(fetchJourneys({ currentPage }));
     }
-    console.log("useEffect", journeysStatus);
-  }, [journeysStatus, dispatch]);
+  }, [journeysStatus, currentPage, dispatch]);
 
   const columns = [
     "ID",
@@ -44,10 +45,17 @@ const Journeys = () => {
     content = <div>Loading...</div>;
   } else if (journeysStatus === "succeeded") {
     content = (
-      <table className="border-2 border-gray-500 divide-y rounded table-auto">
-        <TableHeader columns={columns} />
-        <TableBody journeys={journeys} />
-      </table>
+      <>
+        <table className="border-2 border-gray-500 divide-y rounded table-auto">
+          <TableHeader columns={columns} />
+          <TableBody journeys={journeys} />
+        </table>
+        <Pagination
+          currentPage={currentPage}
+          changeCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+        />
+      </>
     );
   } else if (journeysStatus === "failed") {
     content = <div>Error</div>;

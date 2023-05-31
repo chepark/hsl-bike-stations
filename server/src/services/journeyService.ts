@@ -3,14 +3,20 @@ import { Journey } from "../db/entity/Journey";
 import { AppDataSource } from "../db/data-source";
 import { Route } from "../db/entity/Route";
 
-export const applyPagination = (
+export const applyPagination = async (
   queryBuilder: SelectQueryBuilder<Journey>,
   page: number
 ) => {
-  const limit: number = 10;
-  const offset: number = page * limit;
+  const jouneysPerPage: number = 10;
+  const offset: number = page * jouneysPerPage;
 
-  queryBuilder.offset(offset).limit(limit);
+  queryBuilder.offset(offset).limit(jouneysPerPage);
+
+  // total pages
+  const totalJourneys = await queryBuilder.getCount();
+  const totalPages = Math.ceil(totalJourneys / jouneysPerPage);
+
+  return totalPages;
 };
 
 export const applySort = (

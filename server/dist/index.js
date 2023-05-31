@@ -25,7 +25,8 @@ data_source_js_1.AppDataSource.initialize()
 // middleware
 app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json());
-// remove later
+// ! remove later
+// ! study about 304 error code and change to other solution.
 app.disable("etag");
 app.use(journeyRoutes_js_1.journeyRoutes);
 app.use(stationRoutes_js_1.stationRoutes);

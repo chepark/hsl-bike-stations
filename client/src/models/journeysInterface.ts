@@ -20,6 +20,6 @@ export interface JourneysData {
 export interface JourneysState {
   journeys: JourneyType[];
   totalPages: number;
-  loading: boolean;
+  status: "loading" | "succeeded" | "failed";
   error: boolean;
 }

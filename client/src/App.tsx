@@ -8,8 +8,6 @@ import AddStations from "./components/AddStation/AddStation";
 import AddStation from "./components/AddStation/AddStation";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <BrowserRouter>

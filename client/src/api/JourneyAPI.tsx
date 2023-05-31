@@ -3,8 +3,10 @@ import { JourneysData } from "../models/journeysInterface";
 
 const { VITE_BASE_URL } = import.meta.env;
 
-export const getJourneys = async () => {
-  const response = await axios.get(`${VITE_BASE_URL}/journeys`);
+export const getJourneys = async ({ currentPage }: { currentPage: number }) => {
+  const response = await axios.get(
+    `${VITE_BASE_URL}/journeys?page=${currentPage}`
+  );
   const data: JourneysData = response.data;
   return data.data;
 };
