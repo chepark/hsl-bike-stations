@@ -1,4 +1,4 @@
-# dingding
+# dingding - The project is under the production process.
 
 Journey dataset:
 https://dev.hsl.fi/citybikes/od-trips-2021/2021-05.csv
