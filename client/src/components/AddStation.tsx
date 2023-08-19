@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-const AddStation = () => {
+function AddStation() {
   return <div>AddStation</div>;
-};
+}
 
 export default AddStation;

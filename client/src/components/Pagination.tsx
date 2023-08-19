@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { RightArrowIcon } from "../../assets";
+import React, { useEffect, useState } from 'react';
+import { RightArrowIcon } from '../assets';
 
 interface IProps {
   currentPage: number;
@@ -7,7 +7,7 @@ interface IProps {
   changeCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Pagination = (props: IProps) => {
+function Pagination(props: IProps) {
   const { currentPage, totalPages, changeCurrentPage } = props;
   const [pages, setPages] = useState<number[]>([]);
 
@@ -16,36 +16,30 @@ const Pagination = (props: IProps) => {
   useEffect(() => {
     setPages([]);
     if (currentPage < 5) {
-      for (let i = 1; i <= PAGE_LIMIT; i++) {
-        setPages((pages) => [...pages, i]);
+      for (let i = 1; i <= PAGE_LIMIT; i += 1) {
+        setPages((prevPages) => [...prevPages, i]);
       }
     }
 
     if (currentPage >= 5 && currentPage <= totalPages - 5) {
-      for (let i = currentPage - 4; i <= currentPage + 5; i++) {
-        setPages((pages) => [...pages, i]);
+      for (let i = currentPage - 4; i <= currentPage + 5; i += 1) {
+        setPages((prevPages) => [...prevPages, i]);
       }
     }
 
     if (currentPage > totalPages - 5) {
-      for (let i = totalPages - 9; i <= totalPages; i++) {
-        setPages((pages) => [...pages, i]);
+      for (let i = totalPages - 9; i <= totalPages; i += 1) {
+        setPages((prevPages) => [...prevPages, i]);
       }
     }
   }, [currentPage, totalPages]);
 
-  const leftArrowButtons = (
-    <>
-      <li></li>
-    </>
-  );
+  const leftArrowButtons = <li />;
 
   const rightArrowButtons = (
-    <>
-      <li>
-        <RightArrowIcon />
-      </li>
-    </>
+    <li>
+      <RightArrowIcon />
+    </li>
   );
 
   const showPageButtons = pages.map((page) => {
@@ -65,6 +59,6 @@ const Pagination = (props: IProps) => {
       </ul>
     </nav>
   );
-};
+}
 
 export default Pagination;

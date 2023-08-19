@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-const AddJourney = () => {
+function AddJourney() {
   return <div>AddJourney</div>;
-};
+}
 
 export default AddJourney;
