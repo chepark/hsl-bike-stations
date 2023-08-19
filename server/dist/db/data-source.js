@@ -12,10 +12,9 @@ const Journey_js_1 = require("./entity/Journey.js");
 dotenv_1.default.config();
 exports.AppDataSource = new typeorm_1.DataSource({
     type: "postgres",
-    host: "localhost",
+    host: process.env.DATABASE_HOST,
     port: 5432,
-    username: "postgres",
-    password: "1111",
-    database: "city-bike",
+    username: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
     entities: [Station_js_1.Station, Route_js_1.Route, Journey_js_1.Journey],
 });

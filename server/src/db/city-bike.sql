@@ -26,8 +26,10 @@ longitude DECIMAL(10,6),
 latitude DECIMAL(10,6)
 );
 
+-- change distance data type from integer to decimal(10,2). It is because there are values with floating point in the csv file (2021-05.csv).
+ALTER TABLE journey_raw ALTER COLUMN distance TYPE numeric(10, 2);
 
--- load csv file into journey table.
+-- load csv files into journey table. (2021-05.csv, 2021-06.csv, 2021-07.csv)
 \copy journey_raw(departure_time, return_time, departure_station_id, departure_station_name, return_station_id, return_station_name, distance, duration) FROM '/tmp/2021-05.csv' WITH DELIMITER ',' CSV HEADER;
 
 \copy station_raw(id, station_id, name_fi, name_sw, name_en, address_fi, address_sw, city_fi, city_sw, operator, capacity, longitude, latitude) FROM '/tmp/stations.csv' WITH DELIMITER ',' CSV HEADER;
@@ -70,7 +72,7 @@ INSERT INTO station (id, name, address, longitude, latitude) SELECT station_id, 
 
 -- add primary key to the station.id
 ALTER TABLE station
-ADD PRIMARY KEY id;
+ADD PRIMARY KEY (id);
 
 -- create journey table 
 CREATE TABLE journey (
@@ -90,6 +92,10 @@ starting_station INTEGER NOT NULL,
 ending_station INTEGER NOT NULL,
 distance_meter INTEGER NOT NULL
 );
+
+-- there is a row with emtpy distance value
+ALTER TABLE route
+ALTER COLUMN distance_meter DROP NOT NULL;
 
 INSERT INTO route (journey_id, starting_station, ending_station, distance_meter) SELECT id, departure_station_id, return_station_id, distance from journey_raw;
 

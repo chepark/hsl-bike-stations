@@ -35,13 +35,13 @@ export const getJourneys = async (req: Request, res: Response) => {
     .leftJoin("route.endingStation", "endingStation")
     .select([
       "journey.id",
-      "journey.started_at",
-      "journey.ended_at",
-      "journey.duration_sec",
       "startingStation.name",
       "endingStation.name",
+      // "journey.started_at",
+      // "journey.ended_at",
       "route.distance_meter",
-    ]);
+      "journey.duration_sec",
+    ])
 
   // Apply pagination and get toal pages
   const totalPages = await applyPagination(queryBuilder, page);
@@ -52,15 +52,22 @@ export const getJourneys = async (req: Request, res: Response) => {
 
   const journeys = await queryBuilder.getRawMany();
 
+  // Restructure the journeys array to match the frontend interface
+const restructuredJourneys= journeys.map(journey => ({
+  journey_id: journey.journey_id,
+  startingStation_name: journey.startingStation_name,
+  endingStation_name: journey.endingStation_name,
+  route_distance_meter: journey.route_distance_meter,
+  journey_duration_sec: journey.journey_duration_sec,
+}))
+
   //! add function to handle no result found
 
   res.json({
     success: true,
     message: `Retrieved journeys successfully.`,
-    data: {
-      totalPages,
-      journeys,
-    },
+    totalPages,
+    journeys: restructuredJourneys,
   });
 };
 
