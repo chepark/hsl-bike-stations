@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout/Layout';
-import Stations from './components/Stations/Stations';
-import Journeys from './components/Journeys/Journeys';
-import AddJourney from './components/AddJourney/AddJourney';
-import AddStation from './components/AddStation/AddStation';
+import Layout from './components/Layout';
+import Stations from './components/Stations';
+import Journeys from './components/Journeys';
+import AddJourney from './components/AddJourney';
+import AddStation from './components/AddStation';
 
 function App() {
   return (

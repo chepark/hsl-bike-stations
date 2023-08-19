@@ -1,11 +1,11 @@
 export interface JourneyType {
   journey_id: number;
-  journey_started_at: string;
-  journey_ended_at: string;
-  journey_duration_sec: number;
-  route_distance_meter: number;
+  // journey_started_at: string;
+  // journey_ended_at: string;
   startingStation_name: string;
   endingStation_name: string;
+  route_distance_meter: number;
+  journey_duration_sec: number;
 }
 
 export interface JourneysData {
@@ -20,6 +20,6 @@ export interface JourneysData {
 export interface JourneysState {
   journeys: JourneyType[];
   totalPages: number;
-  status: "loading" | "succeeded" | "failed";
+  status: 'loading' | 'succeeded' | 'failed';
   error: boolean;
 }
