@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { BikeIcon, RightArrowIcon } from "../../assets";
-import { HamburgerButton } from "./HamburgerButton";
-import CloseButton from "./CloseButton";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { BikeIcon, RightArrowIcon } from '../../assets';
+import { HamburgerButton } from './HamburgerButton';
+import CloseButton from './CloseButton';
 
-const Header = () => {
+function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
 
   return (
@@ -81,6 +81,6 @@ const Header = () => {
       )}
     </>
   );
-};
+}
 
 export default Header;

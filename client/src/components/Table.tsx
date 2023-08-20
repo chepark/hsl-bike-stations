@@ -8,9 +8,11 @@ type TableProps = {
 function TableHeader({ columns }: { columns: string[] }) {
   return (
     <thead>
-      <tr>
+      <tr className="border-y border-slate-600 bg-light-blue">
         {columns.map((column) => (
-          <th key={column}>{column}</th>
+          <th key={column} className="py-3">
+            {column}
+          </th>
         ))}
       </tr>
     </thead>
@@ -23,7 +25,9 @@ function TableBody({ data }: { data: JourneyType[] }) {
       {data.map((row, i) => (
         <tr key={i}>
           {Object.values(row).map((val, j) => (
-            <td key={j}>{val}</td>
+            <td key={j} className="py-3 text-center border-y border-slate-600">
+              {val}
+            </td>
           ))}
         </tr>
       ))}
@@ -33,7 +37,7 @@ function TableBody({ data }: { data: JourneyType[] }) {
 
 function Table({ columns, data }: TableProps) {
   return (
-    <table>
+    <table className="w-full mt-8 mb-5">
       <TableHeader columns={columns} />
       <TableBody data={data} />
     </table>

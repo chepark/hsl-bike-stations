@@ -10,13 +10,14 @@ import {
 } from '../store/reducers/journeysSlice';
 import Pagination from './Pagination';
 import Table from './Table';
+import { journeyColumns } from '../utils/tableUtils';
 
 function Journeys() {
   // update table when user changes search query, filter, sort, page
   const [searchQuery, setSearchQuery] = useState('');
   const [filter, setFilter] = useState('');
   const [sort, setSort] = useState('');
-  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const journeys = useAppSelector(selectAllJourneys);
   const journeysStatus = useAppSelector(selectJourneysStatus);
@@ -25,27 +26,23 @@ function Journeys() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (journeysStatus === 'loading') {
-      dispatch(fetchJourneys({ currentPage }));
-    }
-  }, [journeysStatus, currentPage, dispatch]);
-
-  const columns = [
-    'ID',
-    'Starting Station',
-    'Ending Station',
-    'Distance',
-    'Duration',
-  ];
+    const pageQuery = currentPage;
+    dispatch(fetchJourneys({ pageQuery }));
+  }, [currentPage, dispatch]);
 
   return (
     <>
+      <h1 className="w-full mt-8 text-left">Journeys</h1>
       {journeysStatus === 'loading' ? (
         <div>Loading...</div>
       ) : (
-        <Table columns={columns} data={journeys} />
+        <Table columns={journeyColumns} data={journeys} />
       )}
-      <h1>Journeys</h1>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        changeCurrentPage={(page) => setCurrentPage(page)}
+      />
     </>
   );
 }

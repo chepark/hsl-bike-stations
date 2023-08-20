@@ -16,5 +16,6 @@ exports.AppDataSource = new typeorm_1.DataSource({
     port: 5432,
     username: process.env.DATABASE_USERNAME,
     password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME,
     entities: [Station_js_1.Station, Route_js_1.Route, Journey_js_1.Journey],
 });

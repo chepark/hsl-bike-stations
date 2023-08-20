@@ -18,7 +18,7 @@ import {
 import { saveNewRoute } from "../services/routeService";
 
 export const getJourneys = async (req: Request, res: Response) => {
-  const page: number = parseInt(req.query.page as string) || 0; // default offset is 0 if not provided
+  const page: number = parseInt(req.query.page as string)-1|| 0; // default offset is 0 if not provided
   const sort = (req.query.sort as string) || "journey.id"; // default sort parameter is journey.id if not provided
   const search = (req.query.search as string | null) || null;
   const filters: FilterParams = {
@@ -50,7 +50,10 @@ export const getJourneys = async (req: Request, res: Response) => {
   if (search) applySearch(queryBuilder, search);
   if (filters) applyFilter(queryBuilder, filters);
 
+  
+
   const journeys = await queryBuilder.getRawMany();
+  console.log(journeys)
 
   // Restructure the journeys array to match the frontend interface
 const restructuredJourneys= journeys.map(journey => ({

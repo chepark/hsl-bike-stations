@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { RightArrowIcon } from '../assets';
+import { useEffect, useState } from 'react';
+import { RightArrowIcon, LeftArrowIcon } from '../assets';
 
 interface IProps {
   currentPage: number;
   totalPages: number;
-  changeCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  changeCurrentPage: (value: number) => void;
 }
 
 function Pagination(props: IProps) {
@@ -34,28 +34,58 @@ function Pagination(props: IProps) {
     }
   }, [currentPage, totalPages]);
 
-  const leftArrowButtons = <li />;
-
-  const rightArrowButtons = (
+  const leftArrowButtons = (
     <li>
-      <RightArrowIcon />
+      {currentPage === 1 ? null : (
+        <button
+          type="button"
+          onClick={() => {
+            changeCurrentPage(currentPage - 1);
+          }}
+        >
+          <LeftArrowIcon />
+        </button>
+      )}
     </li>
   );
 
-  const showPageButtons = pages.map((page) => {
+  const rightArrowButton = (
+    <li>
+      {currentPage === totalPages ? null : (
+        <button
+          type="button"
+          onClick={() => {
+            changeCurrentPage(currentPage + 1);
+          }}
+        >
+          <RightArrowIcon />
+        </button>
+      )}
+    </li>
+  );
+
+  const pageButtons = pages.map((page) => {
     return (
-      <li key={page} onClick={() => changeCurrentPage(page)}>
-        {page}
+      <li key={page} className="px-2">
+        <button
+          type="button"
+          className={currentPage === page ? 'font-bold' : ''}
+          onClick={(e) => {
+            changeCurrentPage(Number(e.currentTarget.textContent));
+          }}
+        >
+          {page}
+        </button>
       </li>
     );
   });
 
   return (
-    <nav role="navigation" aria-label="Pagination Navigation">
+    <nav className="mt-5" role="navigation" aria-label="Pagination Navigation">
       <ul className="flex gap-x-1">
-        {pages.includes(1) ? null : leftArrowButtons}
-        {showPageButtons}
-        {pages.includes(totalPages) ? null : rightArrowButtons}
+        {leftArrowButtons}
+        {pageButtons}
+        {rightArrowButton}
       </ul>
     </nav>
   );

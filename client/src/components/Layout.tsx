@@ -5,7 +5,9 @@ function Layout() {
   return (
     <>
       <Header />
-      <Outlet />
+      <div className="flex flex-col items-center md:container">
+        <Outlet />
+      </div>
     </>
   );
 }
