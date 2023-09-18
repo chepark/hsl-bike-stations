@@ -55,8 +55,9 @@ export const selectJourneysTotalPages = (state: RootState) =>
 export const selectJourneysStatus = (state: RootState) => state.journeys.status;
 
 // ! 6 export reducer
-// ex
+
 // export const { setTitle } = todoSlice.actions;
+
 export default journeysSlice.reducer;
 
 // ! Additional

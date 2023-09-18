@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { RightArrowIcon, LeftArrowIcon } from '../assets';
 
 interface IProps {
@@ -9,8 +10,8 @@ interface IProps {
 
 function Pagination(props: IProps) {
   const { currentPage, totalPages, changeCurrentPage } = props;
+  const [_, setSearchParams] = useSearchParams();
   const [pages, setPages] = useState<number[]>([]);
-
   const PAGE_LIMIT = 10;
 
   useEffect(() => {
@@ -41,6 +42,7 @@ function Pagination(props: IProps) {
           type="button"
           onClick={() => {
             changeCurrentPage(currentPage - 1);
+            setSearchParams({ page: String(currentPage - 1) });
           }}
         >
           <LeftArrowIcon />
@@ -56,6 +58,7 @@ function Pagination(props: IProps) {
           type="button"
           onClick={() => {
             changeCurrentPage(currentPage + 1);
+            setSearchParams({ page: String(currentPage + 1) });
           }}
         >
           <RightArrowIcon />
@@ -72,6 +75,7 @@ function Pagination(props: IProps) {
           className={currentPage === page ? 'font-bold' : ''}
           onClick={(e) => {
             changeCurrentPage(Number(e.currentTarget.textContent));
+            setSearchParams({ page: String(page) });
           }}
         >
           {page}

@@ -1,7 +1,7 @@
-import { SelectQueryBuilder } from "typeorm";
-import { Journey } from "../db/entity/Journey";
-import { AppDataSource } from "../db/data-source";
-import { Route } from "../db/entity/Route";
+import { SelectQueryBuilder } from 'typeorm';
+import { Journey } from '../db/entity/Journey';
+import { AppDataSource } from '../db/data-source';
+import { Route } from '../db/entity/Route';
 
 export const applyPagination = async (
   queryBuilder: SelectQueryBuilder<Journey>,
@@ -23,9 +23,9 @@ export const applySort = (
   queryBuilder: SelectQueryBuilder<Journey>,
   sortQuery: string
 ) => {
-  sortQuery.split(",").forEach((sortValue) => {
-    let order: "ASC" | "DESC" = sortValue.includes("-") ? "DESC" : "ASC";
-    let column = sortValue.replace("-", "");
+  sortQuery.split(',').forEach((sortValue) => {
+    let order: 'ASC' | 'DESC' = sortValue.includes('-') ? 'DESC' : 'ASC';
+    let column = sortValue.replace('-', '');
 
     queryBuilder.addOrderBy(column, order);
   });
@@ -47,26 +47,26 @@ export const applyFilter = (
 
     if (value !== null && value !== undefined) {
       switch (key) {
-        case "departure":
-          queryBuilder.andWhere("startingStation.name = :startingStation", {
+        case 'departure':
+          queryBuilder.andWhere('startingStation.name = :startingStation', {
             startingStation: value,
           });
           break;
-        case "return":
-          queryBuilder.andWhere("endingStation.name = :endingStation", {
+        case 'return':
+          queryBuilder.andWhere('endingStation.name = :endingStation', {
             endingStation: value,
           });
           break;
-        case "duration":
-          const [minDuration, maxDuration] = value.split("-");
-          queryBuilder.andWhere("duration_sec BETWEEN :min AND :max", {
+        case 'duration':
+          const [minDuration, maxDuration] = value.split('-');
+          queryBuilder.andWhere('duration_sec BETWEEN :min AND :max', {
             min: minDuration,
             max: maxDuration,
           });
           break;
-        case "distance":
-          const [minDistance, maxDistance] = value.split("-");
-          queryBuilder.andWhere("distance_meter BETWEEN :min AND :max", {
+        case 'distance':
+          const [minDistance, maxDistance] = value.split('-');
+          queryBuilder.andWhere('distance_meter BETWEEN :min AND :max', {
             min: minDistance,
             max: maxDistance,
           });
@@ -81,10 +81,10 @@ export const applySearch = (
   searchQuery: string | null
 ) => {
   queryBuilder
-    .where("CAST(journey.id AS TEXT) LIKE :id", {
+    .where('CAST(journey.id AS TEXT) LIKE :id', {
       id: `%${searchQuery}%`,
     })
-    .orderBy("journey.id", "ASC");
+    .orderBy('journey.id', 'ASC');
 };
 
 interface NewJourneyData {
@@ -100,7 +100,7 @@ export const saveNewJourney = async (data: NewJourneyData) => {
   // get latest journey id and increment by 1 to use as new journey id
   const latestJourney = await journeyRepository.findOne({
     where: {},
-    order: { id: "DESC" },
+    order: { id: 'DESC' },
   });
 
   const journeyId = latestJourney ? latestJourney.id + 1 : 1;

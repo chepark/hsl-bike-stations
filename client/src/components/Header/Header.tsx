@@ -19,10 +19,10 @@ function Header() {
           <nav>
             <ul className="flex gap-x-8">
               <li>
-                <Link to="">+Add Jouney</Link>
+                <Link to="/journey/add">+Add Jouney</Link>
               </li>
               <li>
-                <Link to="">+Add Stations</Link>
+                <Link to="station/add">+Add Stations</Link>
               </li>
               <li>
                 <Link to="journeys">Journeys</Link>
