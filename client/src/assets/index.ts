@@ -1,4 +1,5 @@
-import { BikeIcon } from "./BikeIcon";
-import { RightArrowIcon } from "./RightArrowIcon";
+import BikeIcon from './BikeIcon';
+import RightArrowIcon from './RightArrowIcon';
+import LeftArrowIcon from './LeftArrowIcon';
 
-export { BikeIcon, RightArrowIcon };
+export { BikeIcon, RightArrowIcon, LeftArrowIcon };

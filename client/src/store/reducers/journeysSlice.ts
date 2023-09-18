@@ -15,10 +15,10 @@ const initialState = {
 
 export const fetchJourneys = createAsyncThunk(
   `${name}/fetchJourneys`, // action type
-  async ({ currentPage }: { currentPage: number }, thunkAPI) => {
+  async ({ pageQuery }: { pageQuery: number }, thunkAPI) => {
     try {
       // ! pass query later
-      const data = await getJourneys({ currentPage });
+      const data = await getJourneys({ pageQuery });
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -55,8 +55,9 @@ export const selectJourneysTotalPages = (state: RootState) =>
 export const selectJourneysStatus = (state: RootState) => state.journeys.status;
 
 // ! 6 export reducer
-// ex
+
 // export const { setTitle } = todoSlice.actions;
+
 export default journeysSlice.reducer;
 
 // ! Additional

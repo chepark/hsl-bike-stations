@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { BikeIcon, RightArrowIcon } from "../../assets";
-import { HamburgerButton } from "./HamburgerButton";
-import CloseButton from "./CloseButton";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { BikeIcon, RightArrowIcon } from '../../assets';
+import { HamburgerButton } from './HamburgerButton';
+import CloseButton from './CloseButton';
 
-const Header = () => {
+function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
 
   return (
@@ -19,10 +19,10 @@ const Header = () => {
           <nav>
             <ul className="flex gap-x-8">
               <li>
-                <Link to="">+Add Jouney</Link>
+                <Link to="/journey/add">+Add Jouney</Link>
               </li>
               <li>
-                <Link to="">+Add Stations</Link>
+                <Link to="station/add">+Add Stations</Link>
               </li>
               <li>
                 <Link to="journeys">Journeys</Link>
@@ -81,6 +81,6 @@ const Header = () => {
       )}
     </>
   );
-};
+}
 
 export default Header;

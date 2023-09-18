@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import { AppDataSource } from "../db/data-source";
-import { Journey } from "../db/entity/Journey";
+import { Request, Response } from 'express';
+import { AppDataSource } from '../db/data-source';
+import { Journey } from '../db/entity/Journey';
 import {
   applyFilter,
   applyPagination,
@@ -8,18 +8,18 @@ import {
   applySort,
   FilterParams,
   saveNewJourney,
-} from "../services/journeyService";
-import { durationCalculator } from "../lib/durationCalculator";
-import { distanceCalculator } from "../lib/distanceCalculator";
+} from '../services/journeyService';
+import { durationCalculator } from '../lib/durationCalculator';
+import { distanceCalculator } from '../lib/distanceCalculator';
 import {
   findStationById,
   stationCoordinates,
-} from "../services/stationService";
-import { saveNewRoute } from "../services/routeService";
+} from '../services/stationService';
+import { saveNewRoute } from '../services/routeService';
 
 export const getJourneys = async (req: Request, res: Response) => {
-  const page: number = parseInt(req.query.page as string) || 0; // default offset is 0 if not provided
-  const sort = (req.query.sort as string) || "journey.id"; // default sort parameter is journey.id if not provided
+  const page: number = parseInt(req.query.page as string) - 1 || 0; // default offset is 0 if not provided
+  const sort = (req.query.sort as string) || 'journey.id'; // default sort parameter is journey.id if not provided
   const search = (req.query.search as string | null) || null;
   const filters: FilterParams = {
     departure: (req.query.departure as string | null) || null,
@@ -29,19 +29,19 @@ export const getJourneys = async (req: Request, res: Response) => {
   };
 
   const queryBuilder = AppDataSource.getRepository(Journey)
-    .createQueryBuilder("journey")
-    .leftJoin("journey.route", "route")
-    .leftJoin("route.startingStation", "startingStation")
-    .leftJoin("route.endingStation", "endingStation")
+    .createQueryBuilder('journey')
+    .leftJoin('journey.route', 'route')
+    .leftJoin('route.startingStation', 'startingStation')
+    .leftJoin('route.endingStation', 'endingStation')
     .select([
-      "journey.id",
-      "startingStation.name",
-      "endingStation.name",
+      'journey.id',
+      'startingStation.name',
+      'endingStation.name',
       // "journey.started_at",
       // "journey.ended_at",
-      "route.distance_meter",
-      "journey.duration_sec",
-    ])
+      'route.distance_meter',
+      'journey.duration_sec',
+    ]);
 
   // Apply pagination and get toal pages
   const totalPages = await applyPagination(queryBuilder, page);
@@ -53,13 +53,13 @@ export const getJourneys = async (req: Request, res: Response) => {
   const journeys = await queryBuilder.getRawMany();
 
   // Restructure the journeys array to match the frontend interface
-const restructuredJourneys= journeys.map(journey => ({
-  journey_id: journey.journey_id,
-  startingStation_name: journey.startingStation_name,
-  endingStation_name: journey.endingStation_name,
-  route_distance_meter: journey.route_distance_meter,
-  journey_duration_sec: journey.journey_duration_sec,
-}))
+  const restructuredJourneys = journeys.map((journey) => ({
+    journey_id: journey.journey_id,
+    startingStation_name: journey.startingStation_name,
+    endingStation_name: journey.endingStation_name,
+    route_distance_meter: journey.route_distance_meter,
+    journey_duration_sec: journey.journey_duration_sec,
+  }));
 
   //! add function to handle no result found
 
@@ -86,7 +86,7 @@ export const addJourney = async (req: Request, res: Response) => {
 
   if (!startCoordinates || !endCoordinates) {
     res.status(500).json({
-      message: "cannot find coordinates of starting/ending station",
+      message: 'cannot find coordinates of starting/ending station',
     });
   } else if (startCoordinates && endCoordinates) {
     duration_sec = durationCalculator(started_at, ended_at);

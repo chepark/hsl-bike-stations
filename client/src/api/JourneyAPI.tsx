@@ -2,10 +2,10 @@ import axios from 'axios';
 
 const { VITE_BASE_URL } = import.meta.env;
 
-export const getJourneys = async ({ currentPage }: { currentPage: number }) => {
+export const getJourneys = async ({ pageQuery }: { pageQuery: number }) => {
   const response = await axios.get(
-    // `${VITE_BASE_URL}/journeys?page=${currentPage}`
-    `http://localhost:8000/api/journeys?page=${currentPage}`
+    // `${VITE_BASE_URL}/journeys?page=${pageQuery}`
+    `http://localhost:8000/api/journeys?page=${pageQuery}`
   );
   const { data } = response;
   return data;
