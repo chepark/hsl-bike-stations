@@ -8,6 +8,7 @@ import {
   applySort,
   FilterParams,
   saveNewJourney,
+  getMinMaxDuration,
 } from '../services/journeyService';
 import { durationCalculator } from '../lib/durationCalculator';
 import { distanceCalculator } from '../lib/distanceCalculator';
@@ -15,7 +16,7 @@ import {
   findStationById,
   stationCoordinates,
 } from '../services/stationService';
-import { saveNewRoute } from '../services/routeService';
+import { getMinMaxDistance, saveNewRoute } from '../services/routeService';
 
 export const getJourneys = async (req: Request, res: Response) => {
   const page: number = parseInt(req.query.page as string) - 1 || 0; // default offset is 0 if not provided
@@ -37,14 +38,16 @@ export const getJourneys = async (req: Request, res: Response) => {
       'journey.id',
       'startingStation.name',
       'endingStation.name',
-      // "journey.started_at",
-      // "journey.ended_at",
       'route.distance_meter',
       'journey.duration_sec',
+      // "journey.started_at",
+      // "journey.ended_at",
     ]);
 
   // Apply pagination and get toal pages
   const totalPages = await applyPagination(queryBuilder, page);
+  const distanceRange = await getMinMaxDistance();
+  const durationRange = await getMinMaxDuration();
 
   if (sort) applySort(queryBuilder, sort);
   if (search) applySearch(queryBuilder, search);
@@ -61,13 +64,13 @@ export const getJourneys = async (req: Request, res: Response) => {
     journey_duration_sec: journey.journey_duration_sec,
   }));
 
-  //! add function to handle no result found
-
   res.json({
     success: true,
     message: `Retrieved journeys successfully.`,
     totalPages,
     journeys: restructuredJourneys,
+    durationRange,
+    distanceRange,
   });
 };
 

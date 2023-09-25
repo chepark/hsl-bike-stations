@@ -1,7 +1,7 @@
-import { AppDataSource } from "../db/data-source";
-import { Journey } from "../db/entity/Journey";
-import { Route } from "../db/entity/Route";
-import { Station } from "../db/entity/Station";
+import { AppDataSource } from '../db/data-source';
+import { Journey } from '../db/entity/Journey';
+import { Route } from '../db/entity/Route';
+import { Station } from '../db/entity/Station';
 
 interface newRouteData {
   startingStation: Station;
@@ -22,7 +22,7 @@ export const saveNewRoute = async (
   });
 
   if (!savedRoute) {
-    throw new Error("Failed while merging journey into route.");
+    throw new Error('Failed while merging journey into route.');
   }
 
   // update route with journey
@@ -32,6 +32,17 @@ export const saveNewRoute = async (
   });
 
   const updatedRoute = await routeRepository.save(savedRoute);
-  console.log("updatedRoute: ", updatedRoute);
+  console.log('updatedRoute: ', updatedRoute);
   return updatedRoute;
+};
+
+export const getMinMaxDistance = async () => {
+  const routeRepository = AppDataSource.getRepository(Route);
+  const minMaxDistance = await routeRepository
+    .createQueryBuilder('route')
+    .select('MIN(route.distance_meter)', 'min')
+    .addSelect('MAX(route.distance_meter)', 'max')
+    .getRawOne();
+  console.log('minmax: ', minMaxDistance);
+  return minMaxDistance;
 };

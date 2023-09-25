@@ -1,4 +1,4 @@
-import { SelectQueryBuilder } from 'typeorm';
+import { Like, SelectQueryBuilder } from 'typeorm';
 import { Journey } from '../db/entity/Journey';
 import { AppDataSource } from '../db/data-source';
 import { Route } from '../db/entity/Route';
@@ -48,20 +48,20 @@ export const applyFilter = (
     if (value !== null && value !== undefined) {
       switch (key) {
         case 'departure':
-          queryBuilder.andWhere('startingStation.name = :startingStation', {
-            startingStation: value,
+          queryBuilder.andWhere('startingStation.name ILIKE :startingStation', {
+            startingStation: `%${value}%`,
           });
           break;
         case 'return':
-          queryBuilder.andWhere('endingStation.name = :endingStation', {
-            endingStation: value,
+          queryBuilder.andWhere('endingStation.name ILIKE :endingStation', {
+            endingStation: `%${value}%`,
           });
           break;
         case 'duration':
           const [minDuration, maxDuration] = value.split('-');
           queryBuilder.andWhere('duration_sec BETWEEN :min AND :max', {
-            min: minDuration,
-            max: maxDuration,
+            min: Number(minDuration),
+            max: Number(maxDuration),
           });
           break;
         case 'distance':
@@ -110,4 +110,15 @@ export const saveNewJourney = async (data: NewJourneyData) => {
   const result = await journeyRepository.save(journey);
 
   return result;
+};
+
+export const getMinMaxDuration = async () => {
+  const journeyRepository = AppDataSource.getRepository(Journey);
+  const minMaxDuration = await journeyRepository
+    .createQueryBuilder('journey')
+    .select('MIN(journey.duration_sec)', 'min')
+    .addSelect('MAX(journey.duration_sec)', 'max')
+    .getRawOne();
+
+  return minMaxDuration;
 };
