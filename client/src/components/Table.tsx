@@ -6,10 +6,10 @@ import { sortData } from '../utils/tableUtils';
 
 export type SortOrder = 'ascending' | 'descending';
 
-type TableProps = {
+interface TableProps {
   columns: string[];
   data: JourneyType[];
-};
+}
 
 type TableHeaderProps = {
   columns: string[];
@@ -89,23 +89,25 @@ function Table({ columns, data }: TableProps) {
     'ascending'
   );
 
-  const sortedData = sortData({
+  const sortableData = sortData({
     data: [...data],
     columnIndex: sortingColumnIndex,
     sortOrder: sortingOrder,
   });
 
   return (
-    <table className="w-full mt-8 mb-5">
-      <TableHeader
-        columns={columns}
-        columnIndex={sortingColumnIndex}
-        setColumnIndex={setSortingColumnIndex}
-        order={sortingOrder}
-        setOrder={setSortingOrder}
-      />
-      <TableBody data={sortedData} />
-    </table>
+    <>
+      <table className="w-full mt-8 mb-5">
+        <TableHeader
+          columns={columns}
+          columnIndex={sortingColumnIndex}
+          setColumnIndex={setSortingColumnIndex}
+          order={sortingOrder}
+          setOrder={setSortingOrder}
+        />
+        <TableBody data={sortableData} />
+      </table>
+    </>
   );
 }
 

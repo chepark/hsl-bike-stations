@@ -4,8 +4,8 @@ export const journeyColumns = [
   'ID',
   'Starting Station',
   'Ending Station',
-  'Distance',
-  'Duration',
+  'Distance (m)',
+  'Duration (s)',
 ];
 
 // TODO: add more data types
@@ -43,3 +43,14 @@ export const sortData = ({
     return 0;
   });
 };
+
+/**
+ * Generates ranges for the filter dropdowns
+ */
+export const generateRanges = ({
+  min,
+  max,
+}: {
+  min: number;
+  max: number;
+}) => {};

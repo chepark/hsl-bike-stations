@@ -20,6 +20,8 @@ export interface JourneysData {
 export interface JourneysState {
   journeys: JourneyType[];
   totalPages: number;
+  durationRange: { min: number; max: number };
+  distanceRange: { min: number; max: number };
   status: 'loading' | 'succeeded' | 'failed';
   error: boolean;
 }

@@ -2,12 +2,34 @@ import axios from 'axios';
 
 const { VITE_BASE_URL } = import.meta.env;
 
-export const getJourneys = async ({ pageQuery }: { pageQuery: number }) => {
+export type GetJourneysProps = {
+  pageQuery: number;
+  departureQuery?: string;
+  returnQuery?: string;
+  distanceQuery?: string;
+  durationQuery?: string;
+};
+
+export const getJourneys = async ({
+  pageQuery,
+  departureQuery,
+  returnQuery,
+  distanceQuery,
+  durationQuery,
+}: GetJourneysProps) => {
+  const departureStation = departureQuery ? `&departure=${departureQuery}` : '';
+  const returnStation = returnQuery ? `&return=${returnQuery}` : '';
+  const distance = distanceQuery ? `&distance=${distanceQuery}` : '';
+  const duration = durationQuery ? `&duration=${durationQuery}` : '';
+
+  const apiUrl = `http://localhost:8000/api/journeys?page=${pageQuery}${departureStation}${returnStation}${distance}${duration}`;
   const response = await axios.get(
     // `${VITE_BASE_URL}/journeys?page=${pageQuery}`
-    `http://localhost:8000/api/journeys?page=${pageQuery}`
+    apiUrl
   );
+
   const { data } = response;
+
   return data;
 };
 
