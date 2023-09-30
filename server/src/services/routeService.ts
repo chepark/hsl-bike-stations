@@ -32,7 +32,6 @@ export const saveNewRoute = async (
   });
 
   const updatedRoute = await routeRepository.save(savedRoute);
-  console.log('updatedRoute: ', updatedRoute);
   return updatedRoute;
 };
 
@@ -43,6 +42,5 @@ export const getMinMaxDistance = async () => {
     .select('MIN(route.distance_meter)', 'min')
     .addSelect('MAX(route.distance_meter)', 'max')
     .getRawOne();
-  console.log('minmax: ', minMaxDistance);
   return minMaxDistance;
 };
