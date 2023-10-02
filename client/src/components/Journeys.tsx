@@ -120,9 +120,8 @@ function Journeys() {
           Filter
         </button>
       </div>
-      {journeysStatus === 'loading' ? (
-        <div>Loading...</div>
-      ) : (
+      {journeysStatus === 'loading' && <div>Loading...</div>}
+      {journeys.length > 0 && (
         <Table columns={journeyColumns} data={journeys} />
       )}
       <Pagination

@@ -1,4 +1,5 @@
 import { JourneyType } from '../models/journeysInterface';
+import { StationType } from '../models/stationsInterface';
 
 export const journeyColumns = [
   'ID',
@@ -8,20 +9,19 @@ export const journeyColumns = [
   'Duration (s)',
 ];
 
-// TODO: add more data types
-export const sortData = ({
+export const sortData = <T extends JourneyType | StationType>({
   data,
   columnIndex,
   sortOrder,
 }: {
-  data: JourneyType[];
+  data: T[];
   columnIndex: number;
   sortOrder: 'ascending' | 'descending';
 }) => {
   return data.sort((a, b) => {
     const key = Object.keys(data[0])[columnIndex];
-    const valA = a[key as keyof JourneyType];
-    const valB = b[key as keyof JourneyType];
+    const valA = a[key as keyof (JourneyType | StationType)];
+    const valB = b[key as keyof (JourneyType | StationType)];
 
     if (sortOrder === 'ascending') {
       if (typeof valA === 'number' && typeof valB === 'number') {
@@ -44,13 +44,4 @@ export const sortData = ({
   });
 };
 
-/**
- * Generates ranges for the filter dropdowns
- */
-export const generateRanges = ({
-  min,
-  max,
-}: {
-  min: number;
-  max: number;
-}) => {};
+export const stationColumns = ['Id', 'Stations'];

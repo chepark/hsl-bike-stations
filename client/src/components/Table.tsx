@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { JourneyType } from '../models/journeysInterface';
 import SortAscendingIcon from '../assets/SortAscendingIcon';
 import SortDescendingIcon from '../assets/SortDescendingIcon';
 import { sortData } from '../utils/tableUtils';
+import { StationType } from '../models/stationsInterface';
 
 export type SortOrder = 'ascending' | 'descending';
 
-interface TableProps {
+interface TableProps<T extends JourneyType | StationType> {
   columns: string[];
-  data: JourneyType[];
+  data: T[];
 }
 
 type TableHeaderProps = {
@@ -67,14 +68,14 @@ function TableHeader({
   );
 }
 
-function TableBody({ data }: { data: JourneyType[] }) {
+function TableBody<T>({ data }: { data: T[] }) {
   return (
     <tbody>
       {data.map((row, i) => (
         <tr key={i}>
           {Object.values(row).map((val, j) => (
             <td key={j} className="py-3 text-center border-y border-slate-600">
-              {val}
+              {val as string}
             </td>
           ))}
         </tr>
@@ -83,7 +84,10 @@ function TableBody({ data }: { data: JourneyType[] }) {
   );
 }
 
-function Table({ columns, data }: TableProps) {
+function Table<T extends JourneyType | StationType>({
+  columns,
+  data,
+}: TableProps<T>) {
   const [sortingColumnIndex, setSortingColumnIndex] = useState<number>(0);
   const [sortingOrder, setSortingOrder] = useState<'ascending' | 'descending'>(
     'ascending'
