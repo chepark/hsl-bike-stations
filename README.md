@@ -1,6 +1,16 @@
 # dingding - The project is under the production process.
 
-Dataset: server/raw-data
+Using the [open data](https://www.hsl.fi/en/hsl/open-data) from Helsinki Region Transport(HSL), the app helps to see journeys made by city bikes with filters and sorts.
+
+# Features
+
+# Technologies
+
+- Frontend: React, TypeScript, Redux Toolkit, TailwindCSS, Vite,
+- Backend: Node, Express, Typescript, TypeORM
+- Database: Postgres,
+
+Dataset: server/src/db/raw-data
 
 # 1. Design UI
 
