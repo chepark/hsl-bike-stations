@@ -1,30 +1,31 @@
-import { Request, Response, query } from "express";
-import { AppDataSource } from "../db/data-source";
-import { Station } from "../db/entity/Station";
+import { Request, Response, query } from 'express';
+import { AppDataSource } from '../db/data-source';
+import { Station } from '../db/entity/Station';
 import {
   applyPagination,
   applySearch,
   findStationById,
   getStationDetail,
   saveNewStation,
-} from "../services/stationService";
-import { Route } from "../db/entity/Route";
-import { addressGeocode } from "../lib/addressGeocode";
+} from '../services/stationService';
+import { Route } from '../db/entity/Route';
+import { addressGeocode } from '../lib/addressGeocode';
 
 export const getStations = async (req: Request, res: Response) => {
   const page: number = parseInt(req.query.page as string);
   const search = (req.query.search as string) || null;
 
   const queryBuilder = AppDataSource.getRepository(Station)
-    .createQueryBuilder("station")
+    .createQueryBuilder('station')
     .select([
-      "station.id",
-      "station.name",
-      "station.longitude",
-      "station.latitude",
+      'station.id',
+      'station.name',
+      'station.address',
+      'station.longitude',
+      'station.latitude',
     ]);
 
-  applyPagination(queryBuilder, page);
+  const totalPages = await applyPagination(queryBuilder, page);
   applySearch(queryBuilder, search);
 
   const stations = await queryBuilder.getRawMany();
@@ -33,7 +34,8 @@ export const getStations = async (req: Request, res: Response) => {
     success: true,
     message: `Retrieved stations successfully.`,
     data: {
-      stations: stations,
+      stations,
+      totalPages,
     },
   });
 };
@@ -42,7 +44,7 @@ export const getStationById = async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
 
   const queryBuilder =
-    AppDataSource.getRepository(Route).createQueryBuilder("route");
+    AppDataSource.getRepository(Route).createQueryBuilder('route');
 
   const stationDetail = await getStationDetail(queryBuilder, id);
 
