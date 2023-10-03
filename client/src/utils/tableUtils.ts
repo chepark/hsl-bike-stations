@@ -9,6 +9,8 @@ export const journeyColumns = [
   'Duration (s)',
 ];
 
+export const stationColumns = ['Id', 'Stations'];
+
 export const sortData = <T extends JourneyType | StationType>({
   data,
   columnIndex,
@@ -43,5 +45,3 @@ export const sortData = <T extends JourneyType | StationType>({
     return 0;
   });
 };
-
-export const stationColumns = ['Id', 'Stations'];

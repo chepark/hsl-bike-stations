@@ -33,7 +33,7 @@ function InteractiveMap({ data }: any) {
     <MapContainer
       center={[60.1699, 24.93]}
       zoom={15}
-      style={{ height: '100vh', width: '100vw' }}
+      style={{ height: '100vh', width: '70vw' }}
     >
       <MapComponent setZoomLevel={setZoomLevel} />
       <TileLayer

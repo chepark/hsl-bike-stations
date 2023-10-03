@@ -48,4 +48,6 @@ const stationSlice = createSlice({
 });
 
 export const selectAllStations = (state: RootState) => state.stations.stations;
+export const selectStationsTotalPages = (state: RootState) =>
+  state.stations.totalPages;
 export default stationSlice.reducer;
