@@ -4,6 +4,7 @@ import Stations from './components/Stations';
 import Journeys from './components/Journeys';
 import AddJourney from './components/AddJourney';
 import AddStation from './components/AddStation';
+import StationDetail from './components/StationDetail';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="stations" element={<Stations />} />
+          <Route path="station/:id" element={<StationDetail />} />
           <Route path="journeys" element={<Journeys />} />
           <Route path="jouney/new" element={<AddJourney />} />
           <Route path="station/new" element={<AddStation />} />
