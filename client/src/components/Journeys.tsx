@@ -16,6 +16,7 @@ import { journeyColumns } from '../utils/tableUtils';
 import SearchFilter, { SearchFilterProps } from './SearchFilter';
 import SliderFilter, { SliderFilterProps } from './SliderFilter';
 import { stringifiedRange } from '../utils/filterUtils';
+import FilterForm from './FilterForm';
 
 function Journeys() {
   // update table when user changes search query, filter, sort, page
@@ -71,7 +72,7 @@ function Journeys() {
       type: 'search',
       label: 'Starting station',
       placeholder: 'Enter station name',
-      validation: '[sS]*',
+      validation: '^(?:[A-Za-z]+)$',
       handleChange: (e: React.ChangeEvent<HTMLInputElement>) =>
         setDepartureQuery(e.target.value),
     },
@@ -79,7 +80,7 @@ function Journeys() {
       type: 'search',
       label: 'Ending station',
       placeholder: 'Enter station name',
-      validation: '[sS]*',
+      validation: '^(?:[A-Za-z]+)$',
       handleChange: (e: React.ChangeEvent<HTMLInputElement>) =>
         setReturnQuery(e.target.value),
     },
@@ -105,20 +106,23 @@ function Journeys() {
     <>
       <h1 className="w-full mt-8 mb-4 text-left">Journeys</h1>
       <div className="flex flex-row items-center self-start w-full gap-8 p-4 bg-light-blue">
-        {filters.map((filter, i) => {
-          const { type, ...rest } = filter;
-          if (type === 'search') {
-            return <SearchFilter key={i} {...(rest as SearchFilterProps)} />;
-          } else if (filter.type === 'slider') {
-            return <SliderFilter key={i} {...(rest as SliderFilterProps)} />;
-          }
-        })}
-        <button
-          className="px-4 py-2 text-white rounded cursor-pointer bg-blue h-fit"
-          onClick={() => setFetchWithFilter(true)}
+        <FilterForm
+          classNames="flex flex-row items-center self-start w-full gap-8 p-4 bg-light-blue"
+          buttonLabel="Filter"
+          handleSubmit={(e: React.FormEvent) => {
+            e.preventDefault();
+            setFetchWithFilter(true);
+          }}
         >
-          Filter
-        </button>
+          {filters.map((filter, i) => {
+            const { type, ...rest } = filter;
+            if (type === 'search') {
+              return <SearchFilter key={i} {...(rest as SearchFilterProps)} />;
+            } else if (filter.type === 'slider') {
+              return <SliderFilter key={i} {...(rest as SliderFilterProps)} />;
+            }
+          })}
+        </FilterForm>
       </div>
       {journeysStatus === 'loading' && <div>Loading...</div>}
       {journeys.length > 0 && (
