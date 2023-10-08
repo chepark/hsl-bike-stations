@@ -1,15 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import Header from './Header/Header';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 function Layout() {
   const { pathname } = useLocation();
-  console.log('location', location);
-
+  const regex = /^\/station\/\d+$|^\/stations$/;
   // If it is Stations or StationDetail page, do not use container.
-  const classNames = pathname.includes('/stations' || '/station')
-    ? ''
-    : 'md:container';
+  const classNames = pathname.match(regex) ? '' : 'md:container';
 
   return (
     <>
