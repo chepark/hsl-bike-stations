@@ -37,7 +37,7 @@ function Stations() {
   const dispatch = useAppDispatch();
   const stations = useAppSelector(selectAllStations);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(stations.length / 15);
+  const [totalPages, setTotalPages] = useState<number>(0);
   const [listedStations, setListedStations] = useState<StationType[]>([]);
 
   useEffect(() => {
@@ -46,18 +46,20 @@ function Stations() {
 
   useEffect(() => {
     setListedStations(pagenatedData(currentPage, stations));
-  }, [currentPage]);
+    setTotalPages(stations.length / 15);
+  }, [currentPage, stations]);
 
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase();
 
     const filteredStations = stations.filter(
       (station) =>
-        station.station_name.toLowerCase().includes(`/${query}/`) ||
+        station.station_name.toLowerCase().includes(query) ||
         station.station_id === Number(query)
     );
 
-    // Change list of pagination buttons
+    console.log(filteredStations);
+    // Change list of pagination
     setTotalPages(
       filteredStations.length < 15 ? 1 : Math.ceil(filteredStations.length / 15)
     );
@@ -66,7 +68,7 @@ function Stations() {
   };
 
   return (
-    <div className="flex w-full align-center flex-column">
+    <div className="flex flex-wrap-reverse w-full align-center flex-column md:flex-nowrap">
       <div className="w-full h-screen mx-8 overflow-hidden">
         <FilterForm
           handleSubmit={(e: FormEvent) => {
