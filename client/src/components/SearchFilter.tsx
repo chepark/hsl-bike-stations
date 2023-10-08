@@ -1,8 +1,9 @@
 export type SearchFilterProps = {
-  label: string;
+  label?: string;
   placeholder: string;
   handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   validation: string;
+  classNames?: string;
 };
 
 export default function SearchFilter({
@@ -10,9 +11,10 @@ export default function SearchFilter({
   placeholder,
   handleChange,
   validation,
+  classNames,
 }: SearchFilterProps) {
   return (
-    <div>
+    <div className={classNames}>
       <label htmlFor={label}>{label}</label>
       <input
         type="text"

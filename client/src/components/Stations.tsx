@@ -1,22 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { StationType } from '../models/stationsInterface';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
   fetchStations,
   selectAllStations,
 } from '../store/reducers/stationSlice';
-import InteractiveMap from './InteractiveMap';
-import { sortData, stationColumns } from '../utils/tableUtils';
-import Pagination from './Pagination';
-import { current } from '@reduxjs/toolkit';
-import SearchFilter from './SearchFilter';
 import { pagenatedData } from '../utils/listUtils';
-import { StationType } from '../models/stationsInterface';
+import InteractiveMap from './InteractiveMap';
+import Pagination from './Pagination';
+import SearchFilter from './SearchFilter';
+import FilterForm from './FilterForm';
+
+function StationListItem({ station }: { station: StationType }) {
+  const [isHover, setIsHover] = useState(false);
+
+  return (
+    <li
+      className={`py-3 border-b cursor-pointer ${
+        isHover ? 'bg-light-blue' : null
+      }`}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseOut={() => {
+        setIsHover(false);
+      }}
+    >
+      <Link to={`/station/${station.station_id}`}>
+        <span className="mr-4"> {station.station_id}</span>
+        <span>{station.station_name}</span>
+      </Link>
+    </li>
+  );
+}
 
 function Stations() {
   const dispatch = useAppDispatch();
   const stations = useAppSelector(selectAllStations);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(stations.length / 15);
   const [listedStations, setListedStations] = useState<StationType[]>([]);
 
   useEffect(() => {
@@ -27,24 +48,48 @@ function Stations() {
     setListedStations(pagenatedData(currentPage, stations));
   }, [currentPage]);
 
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value.toLowerCase();
+
+    const filteredStations = stations.filter(
+      (station) =>
+        station.station_name.toLowerCase().includes(`/${query}/`) ||
+        station.station_id === Number(query)
+    );
+
+    // Change list of pagination buttons
+    setTotalPages(
+      filteredStations.length < 15 ? 1 : Math.ceil(filteredStations.length / 15)
+    );
+
+    setListedStations(pagenatedData(currentPage, filteredStations));
+  };
+
   return (
-    <div className="flex w-full flew-column">
-      <div className="w-full h-screen overflow-scroll">
-        <ul>
-          {listedStations.map((station, i) => {
-            return (
-              <li className="py-3 border-b cursor-pointer">
-                <Link to={`/station/${station.station_id}`}>
-                  <span className="mr-4"> {station.station_id}</span>
-                  <span>{station.station_name}</span>
-                </Link>
-              </li>
-            );
-          })}
+    <div className="flex w-full align-center flex-column">
+      <div className="w-full h-screen mx-8 overflow-hidden">
+        <FilterForm
+          handleSubmit={(e: FormEvent) => {
+            e.preventDefault();
+          }}
+          classNames="flex flex-row space-between h-fit w-full gap-4 mt-8"
+        >
+          <SearchFilter
+            classNames="w-full"
+            placeholder="Search by station name or ID"
+            validation="^(?:[A-Za-z]+|\d+)$"
+            handleChange={handleSearchInputChange}
+          />
+        </FilterForm>
+        <ul className="my-8">
+          {listedStations &&
+            listedStations.map((station, i) => (
+              <StationListItem key={i} station={station} />
+            ))}
         </ul>
         <Pagination
           currentPage={currentPage}
-          totalPages={stations.length / 15}
+          totalPages={totalPages}
           changeCurrentPage={(val: number) => {
             setCurrentPage(val);
           }}
