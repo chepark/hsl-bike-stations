@@ -5,5 +5,6 @@ export const pagenatedData = <T>(currentPage: number, data: T[]) => {
     currentPage === 1 ? 0 : PAGE_OFFSET * (currentPage - 1);
   const lastDataIndex = PAGE_OFFSET * currentPage;
 
+  if (lastDataIndex > data.length) return data.slice();
   return data.slice(firstDataIndex, lastDataIndex);
 };
