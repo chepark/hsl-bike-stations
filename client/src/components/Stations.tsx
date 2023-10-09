@@ -20,13 +20,15 @@ function StationListItem({ station }: { station: StationType }) {
       className={`py-3 border-b cursor-pointer ${
         isHover ? 'bg-light-blue' : null
       }`}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseOut={() => {
-        setIsHover(false);
-      }}
     >
-      <Link to={`/station/${station.station_id}`}>
-        <span className="mr-4"> {station.station_id}</span>
+      <Link
+        to={`/station/${station.station_id}`}
+        onMouseEnter={() => setIsHover(true)}
+        onMouseOut={() => {
+          setIsHover(false);
+        }}
+      >
+        <span className="mr-4 cursor-pointer"> {station.station_id}</span>
         <span>{station.station_name}</span>
       </Link>
     </li>
@@ -58,7 +60,6 @@ function Stations() {
         station.station_id === Number(query)
     );
 
-    console.log(filteredStations);
     // Change list of pagination
     setTotalPages(
       filteredStations.length < 15 ? 1 : Math.ceil(filteredStations.length / 15)
@@ -70,6 +71,7 @@ function Stations() {
   return (
     <div className="flex flex-wrap-reverse w-full align-center flex-column md:flex-nowrap">
       <div className="w-full h-screen mx-8 overflow-hidden">
+        <h1 className="w-full mt-8 mb-4 text-left">Stations</h1>
         <FilterForm
           handleSubmit={(e: FormEvent) => {
             e.preventDefault();

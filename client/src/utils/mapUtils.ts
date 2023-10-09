@@ -1,4 +1,5 @@
 import L from 'leaflet';
+import { StationType } from '../models/stationsInterface';
 
 export function chooseIconBasedonZoom(zoom: number) {
   const circleIcon = L.divIcon({
@@ -30,3 +31,10 @@ export function chooseIconBasedonZoom(zoom: number) {
   if (zoom < 15) return circleIcon;
   return bikeIcon;
 }
+
+export const getCenterValue = (station: StationType): [number, number] => {
+  const latitude = Number(station.station_latitude);
+  const longitude = Number(station.station_longitude);
+
+  return [latitude, longitude];
+};

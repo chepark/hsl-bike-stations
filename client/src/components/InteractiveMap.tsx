@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { LeafletEvent } from 'leaflet';
 import { chooseIconBasedonZoom } from '../utils/mapUtils';
+import { StationType } from '../models/stationsInterface';
 
 function MapComponent({
   setZoomLevel,
+  newCenter,
 }: {
   setZoomLevel: (zoom: number) => void;
+  newCenter?: [number, number];
 }) {
   const map = useMap();
 
@@ -23,16 +26,31 @@ function MapComponent({
     };
   }, [map]);
 
+  // useEffect(() => {
+  //   if (!newCenter) return;
+  //   map.setView(newCenter, 15);
+  // }, [newCenter]);
+
   return null;
 }
 
-function InteractiveMap({ data }: any) {
-  const [zoomLevel, setZoomLevel] = useState<number>(15);
+interface IProps<T> {
+  data: T[];
+  center?: [number, number];
+  zoom?: number;
+}
+
+function InteractiveMap<T extends StationType>({
+  data,
+  center = [60.1699, 24.93], // Helsinki
+  zoom = 13,
+}: IProps<T>) {
+  const [zoomLevel, setZoomLevel] = useState<number>(zoom);
 
   return (
     <MapContainer
-      center={[60.1699, 24.93]}
-      zoom={15}
+      center={center}
+      zoom={zoomLevel}
       style={{ height: '100vh', width: '70vw' }}
     >
       <MapComponent setZoomLevel={setZoomLevel} />

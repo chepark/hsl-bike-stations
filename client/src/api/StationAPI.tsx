@@ -20,3 +20,11 @@ export const getStations = async ({
 
   return data;
 };
+
+export const getStationDetail = async (id: number) => {
+  const apiUrl = `http://localhost:8000/api/stations/${id}`;
+  const response = await axios.get(apiUrl);
+  const { data } = response;
+
+  return data;
+};

@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Header from './Header/Header';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 function Layout() {
   const { pathname } = useLocation();
