@@ -6,10 +6,8 @@ import { StationType } from '../models/stationsInterface';
 
 function MapComponent({
   setZoomLevel,
-  newCenter,
 }: {
   setZoomLevel: (zoom: number) => void;
-  newCenter?: [number, number];
 }) {
   const map = useMap();
 
@@ -25,11 +23,6 @@ function MapComponent({
       map.off('zoom', handleZoomChange);
     };
   }, [map]);
-
-  // useEffect(() => {
-  //   if (!newCenter) return;
-  //   map.setView(newCenter, 15);
-  // }, [newCenter]);
 
   return null;
 }
@@ -51,7 +44,7 @@ function InteractiveMap<T extends StationType>({
     <MapContainer
       center={center}
       zoom={zoomLevel}
-      style={{ height: '100vh', width: '70vw' }}
+      style={{ width: '100%', height: '100%' }}
     >
       <MapComponent setZoomLevel={setZoomLevel} />
       <TileLayer

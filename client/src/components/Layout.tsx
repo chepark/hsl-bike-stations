@@ -4,7 +4,8 @@ import { useLocation } from 'react-router-dom';
 
 function Layout() {
   const { pathname } = useLocation();
-  const regex = /^\/station\/\d+$|^\/stations$/;
+  console.log(pathname);
+  const regex = /^(\/station\/\d+|\/stations|\/)$/;
   // If it is Stations or StationDetail page, do not use container.
   const classNames = pathname.match(regex) ? '' : 'md:container';
 
