@@ -14,7 +14,9 @@ function Header() {
         <div className="hidden text-white md:container md:flex md:flex-row md:justify-between">
           <div className="flex items-center gap-x-2">
             <BikeIcon />
-            <div className="">Helsinki City Bike</div>
+            <div className="cursor-pointer">
+              <Link to={'/'}>Helsinki City Bike</Link>
+            </div>
           </div>
           <nav>
             <ul className="flex gap-x-8">
@@ -22,7 +24,7 @@ function Header() {
                 <Link to="/journey/add">+Add Jouney</Link>
               </li>
               <li>
-                <Link to="station/add">+Add Stations</Link>
+                <Link to="station/add">+Add Station</Link>
               </li>
               <li>
                 <Link to="journeys">Journeys</Link>
@@ -38,7 +40,9 @@ function Header() {
         <div className="flex items-center justify-between px-3 text-white md:hidden">
           <div className="flex items-center gap-x-2">
             <BikeIcon />
-            <div className="">Helsinki City Bike</div>
+            <div className="">
+              <Link to={'/'}>Helsinki City Bike</Link>
+            </div>
           </div>
           <div className="flex items-center gap-x-2">
             {showMobileMenu ? (
@@ -59,7 +63,7 @@ function Header() {
               </div>
             </li>
             <li className="flex flex-row items-center justify-between px-3 py-4 border-b-2 border-light-gray-100 hover:bg-light-gray-50">
-              <Link to="stations">Stations</Link>
+              <Link to="stations">Bike stations</Link>
               <div>
                 <RightArrowIcon />
               </div>
