@@ -11,3 +11,10 @@ export interface StationState {
   status: 'loading' | 'succeeded' | 'failed';
   error: boolean;
 }
+
+export type NewStationType = {
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+};

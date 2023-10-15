@@ -1,7 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '..';
-import { StationState } from '../../models/stationsInterface';
-import { StationsQueryType, getStations } from '../../api/StationAPI';
+import { NewStationType, StationState } from '../../models/stationsInterface';
+import {
+  StationsQueryType,
+  getStations,
+  postStation,
+} from '../../api/StationAPI';
 
 const name = 'stations';
 
@@ -26,6 +30,15 @@ export const fetchStations = createAsyncThunk(
   }
 );
 
+export const addNewStation = createAsyncThunk(
+  `${name}/addNewStation`,
+  async (newStation: NewStationType) => {
+    // post request
+    const response = await postStation(newStation);
+    return response.data;
+  }
+);
+
 const stationSlice = createSlice({
   name,
   initialState,
@@ -43,6 +56,13 @@ const stationSlice = createSlice({
       .addCase(fetchStations.rejected, (state) => {
         state.status = 'failed';
         state.error = true;
+      })
+      .addCase(addNewStation.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.stations.push(action.payload);
+      })
+      .addCase(addNewStation.rejected, (state) => {
+        state.status = 'failed';
       });
   },
 });

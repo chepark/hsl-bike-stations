@@ -14,5 +14,4 @@ export const AppDataSource = new DataSource({
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
   entities: [Station, Route, Journey],
- 
 });

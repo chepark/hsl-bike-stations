@@ -30,6 +30,8 @@ latitude DECIMAL(10,6)
 ALTER TABLE journey_raw ALTER COLUMN distance TYPE numeric(10, 2);
 
 -- load csv files into journey table. (2021-05.csv, 2021-06.csv, 2021-07.csv)
+-- copy and paste the csv files into tmp and run the bash command to change permission
+-- chmod o+rw {2021-05,2021-06,2021-07,stations}.csv
 \copy journey_raw(departure_time, return_time, departure_station_id, departure_station_name, return_station_id, return_station_name, distance, duration) FROM '/tmp/2021-05.csv' WITH DELIMITER ',' CSV HEADER;
 
 \copy station_raw(id, station_id, name_fi, name_sw, name_en, address_fi, address_sw, city_fi, city_sw, operator, capacity, longitude, latitude) FROM '/tmp/stations.csv' WITH DELIMITER ',' CSV HEADER;
@@ -59,8 +61,16 @@ SELECT DISTINCT departure_station_id, departure_station_name FROM journey_raw
 WHERE NOT EXISTS (SELECT 1 FROM station_raw WHERE station_raw.station_id = journey_raw.departure_station_id);
 
 -- create station table
+-- CREATE TABLE station (
+-- id INTEGER,
+-- name VARCHAR(50) NOT NULL, 
+-- address VARCHAR(300), 
+-- longitude DECIMAL(10,6), 
+-- latitude DECIMAL(10,6)
+-- );
+
 CREATE TABLE station (
-id INTEGER,
+id serial PRIMARY KEY,
 name VARCHAR(50) NOT NULL, 
 address VARCHAR(300), 
 longitude DECIMAL(10,6), 
