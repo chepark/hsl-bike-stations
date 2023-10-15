@@ -1,12 +1,18 @@
-import { Entity, PrimaryColumn, Column, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Route } from "./Route";
 
 @Entity()
 export class Station {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn("increment")
   id: number;
 
-  @Column()
+  @Column({ nullable: false })
   name: string;
 
   @Column({ nullable: true })

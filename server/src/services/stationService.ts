@@ -1,4 +1,4 @@
-import { SelectQueryBuilder } from "typeorm";
+import { SelectQueryBuilder, Equal } from "typeorm";
 import { Station } from "../db/entity/Station";
 import { Route } from "../db/entity/Route";
 import { AppDataSource } from "../db/data-source";
@@ -120,6 +120,15 @@ export const findStationById = async (stationId: number) => {
   return stationObject[0];
 };
 
+export const findStationByName = async (stationName: string) => {
+  const stationRepository = AppDataSource.getRepository(Station);
+  const stationObject = await stationRepository.findBy({
+    name: Equal(stationName),
+  });
+
+  return stationObject[0];
+};
+
 interface StationObject {
   id: number;
   name: string;
@@ -143,7 +152,6 @@ export const stationCoordinates = async (stationObj: StationObject) => {
 };
 
 interface NewStation {
-  id: number;
   name: string;
   address: string;
   latitude: number;
