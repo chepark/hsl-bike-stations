@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BikeIcon, RightArrowIcon } from '../../assets';
-import { HamburgerButton } from './HamburgerButton';
-import CloseButton from './CloseButton';
+import { HamburgerButton } from './HamburgerButton.tsx';
+import CloseButton from './CloseButton.tsx';
 
 function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
@@ -21,7 +21,7 @@ function Header() {
           <nav>
             <ul className="flex gap-x-8">
               <li>
-                <Link to="/journey/add">+Add Jouney</Link>
+                <Link to="journey/add">+Add Jouney</Link>
               </li>
               <li>
                 <Link to="station/add">+Add Station</Link>
@@ -69,13 +69,13 @@ function Header() {
               </div>
             </li>
             <li className="flex flex-row items-center justify-between px-3 py-4 border-b-2 border-light-gray-100 hover:bg-light-gray-50">
-              <Link to="">+ Add Journey</Link>
+              <Link to="journey/add">+ Add Journey</Link>
               <div>
                 <RightArrowIcon />
               </div>
             </li>
             <li className="flex flex-row items-center justify-between px-3 py-4 border-b-2 border-light-gray-100 hover:bg-light-gray-50">
-              <Link to="">+ Add Station</Link>
+              <Link to="station/add">+ Add Station</Link>
               <div>
                 <RightArrowIcon />
               </div>
