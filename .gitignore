@@ -1,4 +1,4 @@
-*.csv
+raw-data/*.csv
 node_modules
 .env
 dist/**/*
