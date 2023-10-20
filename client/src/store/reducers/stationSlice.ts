@@ -32,10 +32,14 @@ export const fetchStations = createAsyncThunk(
 
 export const addNewStation = createAsyncThunk(
   `${name}/addNewStation`,
-  async (newStation: NewStationType) => {
-    // post request
-    const response = await postStation(newStation);
-    return response.data;
+  async (newStation: NewStationType, thunkAPI) => {
+    try {
+      // post request
+      const response = await postStation(newStation);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
 
@@ -57,6 +61,9 @@ const stationSlice = createSlice({
         state.status = 'failed';
         state.error = true;
       })
+      .addCase(addNewStation.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(addNewStation.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.stations.push(action.payload);
@@ -68,6 +75,7 @@ const stationSlice = createSlice({
 });
 
 export const selectAllStations = (state: RootState) => state.stations.stations;
+export const selectStationsStatus = (state: RootState) => state.stations.status;
 export const selectStationsTotalPages = (state: RootState) =>
   state.stations.totalPages;
 export default stationSlice.reducer;

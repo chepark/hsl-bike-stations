@@ -110,7 +110,6 @@ export const getStationDetail = async (
     top5startingStations,
   };
 };
-
 export const findStationById = async (stationId: number) => {
   const stationRepository = AppDataSource.getRepository(Station);
   const stationObject = await stationRepository.findBy({

@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { getNewStationCoordinates } from '../../api/StationAPI';
 import Form from '../Form';
 import SelectInput from '../SelectInput';
 import TextInput from '../TextInput';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
-import { addNewStation } from '../../store/reducers/stationSlice';
+import {
+  addNewStation,
+  selectStationsStatus,
+} from '../../store/reducers/stationSlice';
 
 type Error = {
   message: string;
@@ -21,6 +24,7 @@ function AddStation() {
   const [error, setError] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
+  const status = useAppSelector(selectStationsStatus);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -60,7 +64,7 @@ function AddStation() {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full mx-8">
       <h1 className="w-full mt-8 mb-4 text-left">Add bike station</h1>
       {!isFormSubmit && (
         <Form
@@ -74,8 +78,13 @@ function AddStation() {
               handleChange(e, 'name');
             }}
           />
-
-          <fieldset className="flex flex-col mt-5">
+          <fieldset className="flex flex-col">
+            <TextInput
+              label="street"
+              handleChange={(e) => {
+                handleChange(e, 'street');
+              }}
+            />
             <SelectInput
               field="city"
               options={['espoo', 'helsinki']}
@@ -83,19 +92,14 @@ function AddStation() {
                 handleChange(e, 'city');
               }}
             />
-            <TextInput
-              label="street"
-              handleChange={(e) => {
-                handleChange(e, 'street');
-              }}
-            />
           </fieldset>
         </Form>
       )}
       {/* form submit and no error ? show success message */}
 
+      {status === 'succeeded' && <div>successfully added</div>}
       {/* form submit and error ? show error message */}
-      {error && <div>error</div>}
+      {error && <div>Failed to add a new station ...</div>}
     </div>
   );
 }

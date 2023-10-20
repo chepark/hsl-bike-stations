@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BikeIcon, RightArrowIcon } from '../../assets';
+import { BikeIcon, RightArrowIcon } from '../../assets/index.ts';
 import { HamburgerButton } from './HamburgerButton.tsx';
 import CloseButton from './CloseButton.tsx';
 
@@ -20,9 +20,9 @@ function Header() {
           </div>
           <nav>
             <ul className="flex gap-x-8">
-              <li>
+              {/* <li>
                 <Link to="journey/add">+Add Jouney</Link>
-              </li>
+              </li> */}
               <li>
                 <Link to="station/add">+Add Station</Link>
               </li>
@@ -68,12 +68,12 @@ function Header() {
                 <RightArrowIcon />
               </div>
             </li>
-            <li className="flex flex-row items-center justify-between px-3 py-4 border-b-2 border-light-gray-100 hover:bg-light-gray-50">
+            {/* <li className="flex flex-row items-center justify-between px-3 py-4 border-b-2 border-light-gray-100 hover:bg-light-gray-50">
               <Link to="journey/add">+ Add Journey</Link>
               <div>
                 <RightArrowIcon />
               </div>
-            </li>
+            </li> */}
             <li className="flex flex-row items-center justify-between px-3 py-4 border-b-2 border-light-gray-100 hover:bg-light-gray-50">
               <Link to="station/add">+ Add Station</Link>
               <div>

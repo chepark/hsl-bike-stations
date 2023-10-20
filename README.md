@@ -6,7 +6,7 @@ Using the [open data](https://www.hsl.fi/en/hsl/open-data) from Helsinki Region 
 
 # Technologies
 
-- Frontend: React, TypeScript, Redux Toolkit, TailwindCSS, Vite,
+- Frontend: React, TypeScript, Redux, TailwindCSS, Vite,
 - Backend: Node, Express, Typescript, TypeORM
 - Database: Postgres,
 
