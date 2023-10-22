@@ -22,6 +22,16 @@ Dataset: server/src/db/raw-data
   <img width="800px" height="auto" src="./public/assets/data_diagram.jpg">
 </p>
 
+# 3. Run locally
+
+## 3-1 Frontend
+
+```sh
+$ cd client
+$ docker build --tag hsl-client .
+$ docker run -dp 127.0.0.1:5173:5173 hsl-client
+```
+
 <!-- Things to Add according to Solita Blog -->
 
 Prerequisites: Should the reviewer install something on their computer before they can compile and run the project? Does the project only work on Windows or Linux? List all steps that need to be done before trying to run the project. If versions are important, remember to mention those as well.
