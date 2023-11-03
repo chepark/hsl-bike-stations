@@ -1,14 +1,53 @@
 # dingding - The project is under the production process.
 
-Using the [open data](https://www.hsl.fi/en/hsl/open-data) from Helsinki Region Transport(HSL), the app helps to see journeys made by city bikes with filters and sorts.
+Using the [open data](https://www.hsl.fi/en/hsl/open-data) from Helsinki Region Transport(HSL), the app helps to see bike journeys and stations with filters and sorts.
 
 # Features
+
+## Data
+
+[x]Import data from the CSV files to a relational database after normalization
+
+## Journeys page
+
+[x]List the journeys with pagination
+[x]Search journeys by station names
+[x]Filter journeys by setting the range of duration and distance
+[x]Order the list of journeys by columns (departure station, return station, duration and distanace)
+
+## Station page
+
+[x]List all stations with pagination
+[x]Search a station by station name
+[x]Mark all stations on a map
+[x]Display station id and address on popup when a user click a bike station on a map.
+
+## Station detail page
+
+[x]Display detail information related to the station
+
+1. The average distance of a journey starting from the station
+2. The average distance of a journey ending at the station
+3. Top 5 most popular return stations for journeys starting from the station
+4. Top 5 most popular departure stations for journeys ending at the station
+
+Add station page
+
+Single station view
+Recommended
+Station name
+Station address
+Total number of journeys starting from the station
+Total number of journeys ending at the station
+
+Ability to filter all the calculations per month
 
 # Technologies
 
 - Frontend: React, TypeScript, Redux, TailwindCSS, Vite,
 - Backend: Node, Express, Typescript, TypeORM
 - Database: Postgres,
+- Etc: Docker
 
 Dataset: server/src/db/raw-data
 
