@@ -39,12 +39,12 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - /home/chai/hsl_data:/var/lib/postgresql/data
+      - hsldata:/var/lib/postgresql/data
     networks:
       - my-network
 
 volumes:
-  hsl-data:
+  hsldata:
 
 networks:
   my-network:
