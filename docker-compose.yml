@@ -1,0 +1,50 @@
+version: "3"
+services:
+  frontend:
+    container_name: hsl-frontend
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - my-network
+
+  backend:
+    container_name: hsl-backend
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_HOST: host.docker.internal
+    depends_on:
+      - postgres
+    networks:
+      - my-network
+
+  postgres:
+    image: postgres:latest
+    container_name: hsl-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: #city-bike
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: #yourpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - /home/chai/hsl_data:/var/lib/postgresql/data
+    networks:
+      - my-network
+
+volumes:
+  hsl-data:
+
+networks:
+  my-network:
