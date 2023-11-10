@@ -13,11 +13,14 @@ services:
     networks:
       - my-network
 
+  # TODO: change target:production, NODE_ENV: production when deploying
   backend:
     container_name: hsl-backend
+    # target is used to build a specific stage of ./server/Dockerfile
     build:
       context: ./server
       dockerfile: Dockerfile
+      target: development
     restart: unless-stopped
     ports:
       - "8000:8000"
@@ -25,6 +28,9 @@ services:
       - postgres
     networks:
       - my-network
+    # environment variables
+    environment:
+      NODE_ENV: development
 
   postgres:
     image: postgres:latest
@@ -32,14 +38,27 @@ services:
     restart: always
     environment:
       POSTGRES_DB: city-bike
-      POSTGRES_USER: #user
-      POSTGRES_PASSWORD: #password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Chanchae0331
     ports:
       - "5432:5432"
     volumes:
       - hsldata:/var/lib/postgresql/data
     networks:
       - my-network
+
+  nginx:
+    container_name: hsl-nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    depends_on:
+      - frontend
+      - backend
+    restart: always
+    # TODO: check 8008 port availability
+    ports:
+      - "8008:80"
 
 volumes:
   hsldata:
