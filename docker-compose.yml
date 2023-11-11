@@ -4,6 +4,7 @@ x-common-variables: &common-variables
   DB_USERNAME: $DB_USERNAME
   DB_PASSWORD: $DB_PASSWORD
   DB_NAME: $DB_NAME
+  DB_PORT: $DB_PORT
   DB_DOCKER_SERVICE_NAME: $DB_DOCKER_SERVICE_NAME
 
 services:
@@ -36,6 +37,7 @@ services:
       DB_USERNAME: $DB_USERNAME
       DB_PASSWORD: $DB_PASSWORD
       DB_NAME: $DB_NAME
+      DB_PORT: $DB_PORT
       DB_DOCKER_SERVICE_NAME: $DB_DOCKER_SERVICE_NAME
     ports:
       - "8000:8000"
@@ -60,18 +62,20 @@ services:
     networks:
       - my-network
 
-  # nginx:
-  #   container_name: hsl-nginx
-  #   build:
-  #     context: ./nginx
-  #     dockerfile: Dockerfile
-  #   depends_on:
-  #     - frontend
-  #     - backend
-  #   restart: always
-  #   # TODO: check 8008 port availability
-  #   ports:
-  #     - "8008:80"
+  nginx:
+    container_name: hsl-nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    depends_on:
+      - frontend
+      - backend
+    restart: always
+    # The app is working in the localhost:8008.
+    ports:
+      - "8008:80"
+    networks:
+      - my-network
 
 volumes:
   hsldata:
