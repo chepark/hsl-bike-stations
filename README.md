@@ -60,9 +60,21 @@ Display the following information related to the station
   <img width="800px" height="auto" src="./public/assets/data_diagram.jpg">
 </p>
 
+# Why Docker?
+
 # Challenges
 
+## Running Postgres container in Docker
+
+## Setting up Nginx
+
+##
+
 # Future Improvement
+
+## Add test code in the server
+
+##
 
 # 3. Run locally
 
