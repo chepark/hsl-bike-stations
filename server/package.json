@@ -1,17 +1,27 @@
 {
-  "name": "city-bikes-api",
+  "name": "hsl-server",
   "version": "1.0.0",
-  "description": "City Bikes API",
+  "description": "Server for the HSL City Bike app",
+  "keywords": [
+    "typescript",
+    "express",
+    "node",
+    "react",
+    "postgres",
+    "typeorm",
+    "docker",
+    "nginx"
+  ],
   "main": "dist/index.js",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "npm run build && node dist/index.js",
     "prestart": "npm run build",
     "build": "rimraf dist && npx tsc",
     "preserve": "npm run build",
     "serve": "concurrently \"npx tsc -w\" \"nodemon dist/index.js\""
   },
   "author": "Chaeah Park",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@types/express": "^4.17.17",
     "@types/node": "^18.15.11",
