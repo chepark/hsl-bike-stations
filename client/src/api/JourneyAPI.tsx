@@ -20,7 +20,9 @@ export const getJourneys = async ({
   const distance = distanceQuery ? `&distance=${distanceQuery}` : '';
   const duration = durationQuery ? `&duration=${durationQuery}` : '';
 
-  const apiUrl = `http://localhost:8000/api/journeys?page=${pageQuery}${departureStation}${returnStation}${distance}${duration}`;
+  // const apiUrl = `http://localhost:8000/api/journeys?page=${pageQuery}${departureStation}${returnStation}${distance}${duration}`;
+  const apiUrl = `/api/journeys?page=${pageQuery}${departureStation}${returnStation}${distance}${duration}`;
+
   const response = await axios.get(
     // `${VITE_BASE_URL}/journeys?page=${pageQuery}`
     apiUrl
