@@ -10,10 +10,6 @@ import {
   selectStationsStatus,
 } from '../../store/reducers/stationSlice';
 
-type Error = {
-  message: string;
-};
-
 function AddStation() {
   const [inputValues, setInputValues] = useState({
     name: '',

@@ -8,7 +8,7 @@ dotenv.config();
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  url: "postgres://postgres:password@docker-postgres-service-name:5432/city-bike", // modify according to docker setup
+  url: `postgres://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_DOCKER_SERVICE_NAME}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
   synchronize: true,
   entities: [Station, Route, Journey],
 });
