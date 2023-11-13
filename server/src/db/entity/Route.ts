@@ -14,9 +14,6 @@ export class Route {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // @Column()
-  // journey_id: number;
-
   @Column({ nullable: true })
   distance_meter: number;
 

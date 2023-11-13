@@ -1,4 +1,4 @@
-import { Request, Response, query } from "express";
+import { Request, Response } from "express";
 import { AppDataSource } from "../db/data-source";
 import { Station } from "../db/entity/Station";
 import {
@@ -76,8 +76,6 @@ export const addStation = async (req: Request, res: Response) => {
   // TODO: if latitude and longitude are null, return error
   const newStation = { name, address, latitude, longitude };
   const result = await saveNewStation(newStation);
-
-  console.log("result", result);
 
   res.json({
     success: true,
