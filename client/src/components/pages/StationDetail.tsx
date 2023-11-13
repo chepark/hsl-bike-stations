@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import {
   fetchStations,
@@ -9,7 +9,6 @@ import InteractiveMap from '../InteractiveMap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { StationType } from '../../models/stationsInterface';
 import { getStationDetail } from '../../api/StationAPI';
-import { LeftArrowIcon } from '../../assets';
 import { getCenterValue } from '../../utils/mapUtils';
 
 type StationDetailType = {

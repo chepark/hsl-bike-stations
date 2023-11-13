@@ -1,22 +1,12 @@
 import React, { useState } from 'react';
-import { getNewStationCoordinates } from '../../api/StationAPI';
 import Form from '../Form';
 import SelectInput from '../SelectInput';
-import TextInput from '../TextInput';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppSelector } from '../../store/hooks';
 
-import {
-  addNewStation,
-  selectAllStations,
-  selectStationsStatus,
-} from '../../store/reducers/stationSlice';
+import { selectAllStations } from '../../store/reducers/stationSlice';
 import DateTimeInput from '../DateTimeInput';
 import { StationType } from '../../models/stationsInterface';
 import { distanceBetweenCoordinates } from '../../utils/distanceUtil';
-
-type Error = {
-  message: string;
-};
 
 function AddJourney() {
   const [inputValues, setInputValues] = useState({
@@ -27,10 +17,8 @@ function AddJourney() {
   });
 
   const [isFormSubmit, setIsFormSubmit] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [error] = useState<boolean>(false);
 
-  const dispatch = useAppDispatch();
-  const status = useAppSelector(selectStationsStatus);
   const stations = useAppSelector(selectAllStations);
   const stationOptions = stations
     .map((station: StationType) => station.station_name)

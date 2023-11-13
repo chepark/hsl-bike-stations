@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { JourneyType } from '../models/journeysInterface';
 import SortAscendingIcon from '../assets/SortAscendingIcon';
 import SortDescendingIcon from '../assets/SortDescendingIcon';
@@ -68,7 +68,11 @@ function TableHeader({
   );
 }
 
-function TableBody<T>({ data }: { data: T[] }) {
+function TableBody<T extends JourneyType | StationType>({
+  data,
+}: {
+  data: T[];
+}) {
   return (
     <tbody>
       {data.map((row, i) => (

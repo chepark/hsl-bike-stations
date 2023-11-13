@@ -22,8 +22,8 @@ export const sortData = <T extends JourneyType | StationType>({
 }) => {
   return data.sort((a, b) => {
     const key = Object.keys(data[0])[columnIndex];
-    const valA = a[key as keyof (JourneyType | StationType)];
-    const valB = b[key as keyof (JourneyType | StationType)];
+    const valA = a[key as keyof (JourneyType | StationType)] as string | number;
+    const valB = b[key as keyof (JourneyType | StationType)] as string | number;
 
     if (sortOrder === 'ascending') {
       if (typeof valA === 'number' && typeof valB === 'number') {
