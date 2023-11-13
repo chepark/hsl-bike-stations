@@ -3,7 +3,6 @@ import Header from './Header/Header';
 
 function Layout() {
   const { pathname } = useLocation();
-  console.log(pathname);
   const regex = /^(\/station\/\d+|\/stations|\/)$/;
   // If it is Stations or StationDetail page, do not use container.
   const classNames = pathname.match(regex) ? '' : 'md:container';

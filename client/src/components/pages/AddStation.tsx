@@ -46,8 +46,6 @@ function AddStation() {
         longitude,
       })
     );
-
-    // TODO: should I fetch new stations in redux?
   };
 
   const handleChange = (

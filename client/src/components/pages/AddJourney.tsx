@@ -8,6 +8,7 @@ import DateTimeInput from '../DateTimeInput';
 import { StationType } from '../../models/stationsInterface';
 import { distanceBetweenCoordinates } from '../../utils/distanceUtil';
 
+// TODO: Start working on this component when adding AddJourney page.
 function AddJourney() {
   const [inputValues, setInputValues] = useState({
     startingTime: '',
@@ -31,8 +32,6 @@ function AddJourney() {
 
     setIsFormSubmit(true);
 
-    // calculate duration
-
     // calculate distance
     const { startingStation, endingStation } = inputValues;
     const distance = distanceBetweenCoordinates(
@@ -40,7 +39,7 @@ function AddJourney() {
       endingStation,
       stations
     );
-    console.log('dddd', distance);
+    console.log('distance', distance);
   };
 
   const handleChange = (

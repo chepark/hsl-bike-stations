@@ -62,8 +62,6 @@ export const postStation = async (newStation: NewStationType) => {
   try {
     const response = await axios.post(apiUrl, newStation);
     const { data } = response;
-
-    console.log('new station', data);
     return data;
   } catch (error) {
     return error;
