@@ -3,6 +3,7 @@
 Using the [open data](https://www.hsl.fi/en/hsl/open-data) from Helsinki Region Transport(HSL), the app helps to check bike journeys and stations data from HSL with filters and sorts.
 
 # Technologies
+<<<<<<< Updated upstream
 
 - Frontend: React, TypeScript, Redux, TailwindCSS, Vite,
 - Backend: Node, Express, Typescript, TypeORM
@@ -11,6 +12,20 @@ Using the [open data](https://www.hsl.fi/en/hsl/open-data) from Helsinki Region 
 
 # Architecture
 
+=======
+
+- Frontend: React, TypeScript, Redux, TailwindCSS, Vite,
+- Backend: Node, Express, Typescript, TypeORM
+- Database: Postgres,
+- Etc: Docker
+
+# Software Architecture
+
+<p align="center">
+  <img width="800px" height="auto" src="./public/assets/hsl-flow.jpg">
+</p>
+
+>>>>>>> Stashed changes
 # TODO: add!
 
 # Features
@@ -72,9 +87,14 @@ Display the following information related to the station
 
 # Future Improvement
 
+<<<<<<< Updated upstream
 ## Add test code in the server
 
 ##
+=======
+- Add api test code in the server
+-
+>>>>>>> Stashed changes
 
 # 3. Run locally
 
