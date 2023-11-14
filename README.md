@@ -1,32 +1,19 @@
-# HSL City Bike - The project is under the production process.
+# HSL City Bike
 
 Using the [open data](https://www.hsl.fi/en/hsl/open-data) from Helsinki Region Transport(HSL), the app helps to check bike journeys and stations data from HSL with filters and sorts.
 
 # Technologies
-<<<<<<< Updated upstream
 
 - Frontend: React, TypeScript, Redux, TailwindCSS, Vite,
 - Backend: Node, Express, Typescript, TypeORM
-- Database: Postgres,
-- Etc: Docker
-
-# Architecture
-
-=======
-
-- Frontend: React, TypeScript, Redux, TailwindCSS, Vite,
-- Backend: Node, Express, Typescript, TypeORM
-- Database: Postgres,
-- Etc: Docker
+- Database: PostgreSQL, PgAdmin
+- Etc: Docker, NginX
 
 # Software Architecture
 
 <p align="center">
-  <img width="800px" height="auto" src="./public/assets/hsl-flow.jpg">
+  <img width="800px" height="auto" src="./public/assets/hsl-flow-prod.jpg">
 </p>
-
->>>>>>> Stashed changes
-# TODO: add!
 
 # Features
 
@@ -65,7 +52,9 @@ Display the following information related to the station
 3. API implementation
 4. Frontend Development
 5. Frontend testing
-6. Dockerizing
+6. Dockerizing and Nginx configuation
+7. Data backup
+8. Deployment: setup server, restore data, run the app, connecting IP to hostname
 
 <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FcGs80txWEyb9LjOrglHZXC%2FConvertify-Sketch%252FAdobe%252FGoogle-(Community)%3Fnode-id%3D1%253A2%26t%3DHXk12AmQMAAq5Ud3-1" allowfullscreen></iframe>
 
@@ -75,33 +64,26 @@ Display the following information related to the station
   <img width="800px" height="auto" src="./public/assets/data_diagram.jpg">
 </p>
 
-# Why Docker?
+# Dockerizing for development and production
+
+## Development
 
 # Challenges
 
-## Running Postgres container in Docker
+## Mount volume in Postgres container in Docker
 
-## Setting up Nginx
+## Nginx configuration
 
-##
+## Table joint
+
+## Redux architecture setup
 
 # Future Improvement
 
-<<<<<<< Updated upstream
-## Add test code in the server
-
-##
-=======
 - Add api test code in the server
+- Implement AddJouney page
 -
->>>>>>> Stashed changes
 
 # 3. Run locally
 
-## 3-1 Frontend
-
-```sh
-$ cd client
-$ docker build --tag hsl-client .
-$ docker run -dp 127.0.0.1:5173:5173 hsl-client
-```
+## Prerequisit:
