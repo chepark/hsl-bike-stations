@@ -54,7 +54,12 @@ Display the following information related to the station
 5. Frontend testing
 6. Dockerizing and Nginx configuation
 7. Data backup
-8. Deployment: setup server, restore data, run the app, connecting IP to hostname
+8. Deployment:
+
+- server configuration
+- data restoration
+- running the app,
+- setup connection between IP and hostname
 
 <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FcGs80txWEyb9LjOrglHZXC%2FConvertify-Sketch%252FAdobe%252FGoogle-(Community)%3Fnode-id%3D1%253A2%26t%3DHXk12AmQMAAq5Ud3-1" allowfullscreen></iframe>
 
