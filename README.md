@@ -206,3 +206,4 @@ $ docker-compose -f docker-compose-dev.yml up --build
 ```
 
 - [ ] Download [the folder](https://metropoliafi-my.sharepoint.com/:f:/g/personal/chaeahp_metropolia_fi/Egq9M_hHMKNJsbhSqb5Sa0cBZC2CdGdP0jGgf2RuDud7Yg?e=kmH9NZ) and upzip it. Using the folder, restore the data in PgAdmin
+- [ ] Open the app on http://localhost:8008
