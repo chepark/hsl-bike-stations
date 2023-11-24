@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Pagination from '../components/Pagination';
 import { MemoryRouter } from 'react-router-dom'; // it is needed for useSearchParams
 
@@ -41,19 +42,19 @@ describe('Pagination', () => {
     expect(lastPage).toBeNull();
   });
 
-  it('should update the page button range when the current page is changed.', () => {
+  it('should update currentPage.', async () => {
+    const setCurrentPage = vi.fn();
     render(
       <MemoryRouter>
         <Pagination
           currentPage={1}
           totalPages={30}
-          changeCurrentPage={() => {}}
+          changeCurrentPage={setCurrentPage}
         />
       </MemoryRouter>
     );
 
-    fireEvent.click(screen.getByText(/7/));
-    const lastPage = screen.queryByText(/11/);
-    expect(lastPage).toBeVisible();
+    fireEvent.click(screen.getByRole('button', { name: /7/ }));
+    expect(setCurrentPage).toHaveBeenCalledWith(7);
   });
 });

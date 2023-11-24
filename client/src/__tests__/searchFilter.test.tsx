@@ -1,22 +1,35 @@
 import { describe, expect, it, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import SearchFilter from '../components/SearchFilter';
 
 describe('SearchFilter', () => {
-  it('should render 10 pages.', () => {
-    const validater = vi.fn();
+  it('should display label.', () => {
     render(
       <SearchFilter
         label="search name"
         placeholder="enter name"
-        pattern="[A-Za-z]{3}"
+        pattern="text"
       />
     );
 
-    const lastPageButton = screen.getByText(/10/);
-    expect(lastPageButton).toBeVisible();
+    const label = screen.getByText(/search name/);
+    expect(label).toBeVisible();
+  });
 
-    const lastPage = screen.queryByText(/30/);
-    expect(lastPage).toBeNull();
+  it('should execute handleChange on input changes.', () => {
+    const handleChange = vi.fn(); // mock function
+
+    render(
+      <SearchFilter
+        label="search name"
+        placeholder="enter name"
+        pattern="text"
+        handleChange={handleChange}
+      />
+    );
+
+    const input = screen.getByTestId('search-filter') as HTMLInputElement;
+    fireEvent.change(input, { target: { value: 'test' } });
+    expect(handleChange).toHaveBeenCalled();
   });
 });
