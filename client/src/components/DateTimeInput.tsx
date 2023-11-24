@@ -12,6 +12,7 @@ function DateTimeInput({ field, handleChange, required }: DateTimeInputProps) {
     <div className="flex flex-col mb-3">
       <label htmlFor={field}>{firstCharToUpperCase(field)}</label>
       <input
+        data-testid="dateTimeInput"
         type="datetime-local"
         name={field}
         onChange={handleChange}

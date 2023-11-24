@@ -81,7 +81,7 @@ function Stations() {
           <SearchFilter
             classNames="w-full"
             placeholder="Search by station name or ID"
-            validation="^(?:[A-Za-z]+|\d+)$"
+            pattern="^(?:[A-Za-z]+|\d+)$"
             handleChange={handleSearchInputChange}
           />
         </Form>

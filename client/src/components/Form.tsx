@@ -9,7 +9,7 @@ type FormProps = {
 
 function Form({ children, handleSubmit, buttonLabel, classNames }: FormProps) {
   return (
-    <form onSubmit={handleSubmit} className={classNames}>
+    <form data-testid="form" onSubmit={handleSubmit} className={classNames}>
       {children}
       {buttonLabel && (
         <button

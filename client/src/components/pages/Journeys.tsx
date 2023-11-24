@@ -72,7 +72,7 @@ function Journeys() {
       type: 'search',
       label: 'Starting station',
       placeholder: 'Enter station name',
-      validation: '^(?:[A-Za-z]+)$',
+      pattern: '^(?:[A-Za-z]+)$',
       handleChange: (e: React.ChangeEvent<HTMLInputElement>) =>
         setDepartureQuery(e.target.value),
     },
@@ -80,7 +80,7 @@ function Journeys() {
       type: 'search',
       label: 'Ending station',
       placeholder: 'Enter station name',
-      validation: '^(?:[A-Za-z]+)$',
+      pattern: '^(?:[A-Za-z]+)$',
       handleChange: (e: React.ChangeEvent<HTMLInputElement>) =>
         setReturnQuery(e.target.value),
     },
