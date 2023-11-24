@@ -69,7 +69,11 @@ Display the following information related to the station
 
 # UI design
 
-<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FcGs80txWEyb9LjOrglHZXC%2FConvertify-Sketch%252FAdobe%252FGoogle-(Community)%3Fnode-id%3D1%253A2%26t%3DHXk12AmQMAAq5Ud3-1" allowfullscreen></iframe>
+See in [Figma](https://www.figma.com/file/cGs80txWEyb9LjOrglHZXC/city-bike?type=design&node-id=1%3A2&mode=design&t=K9S2aKbJHW7WKsTx-1)
+
+<p align="center">
+  <img width="800px" height="auto" src="./public/assets/ui.jpg" alt="Bike station ui">
+</p>
 
 # Data modeling
 
@@ -77,7 +81,7 @@ Display the following information related to the station
   <img width="800px" height="auto" src="./public/assets/data_modeling.jpg">
 </p>
 
-# Note for Docker (development and production)
+# Docker
 
 It's been hard to find right Docker resources that cover the needs of this project. This is the note for future myself anyone anyone who is looking for Docker configuration reference for the following cases.
 
