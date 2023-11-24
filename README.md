@@ -88,7 +88,7 @@ It's been hard to find right Docker resources that cover the needs of this proje
 
   _I implemented the app without docker development environment. After checking the app fully operational, then I moved to set up dockerizing process. Therefore, if you want to start to set up docker dev environment first, the working process written on this section may be different._
 
-## Development:
+## Development
 
 ### Work Process
 
@@ -96,132 +96,12 @@ It's been hard to find right Docker resources that cover the needs of this proje
   <img width="800px" height="auto" src="./public/assets/docker-dev.jpg">
 </p>
 
+**NOTES**
+
 - The process #1: PgAdmin desktop is used to backup the normalized data
-- The process #3: Nginx reverse proxy config is in `./client/nginx/default.conf`
+- The process #2: In `docker-compose-dev.yml`, the following codes are relevant to the process.
 
-### Dockerfile and docker-compose-dev.yml configuration
-
-```docker
-#### 1. Frontend: /client/Dockerfile.dev ####
-# Build image from node
-FROM node:20-alpine
-# Working directory in Docker
-WORKDIR /app
-# Copy the package.json from the current location
-# and paste to the working directory /app
-COPY package.json /app
-# Run the npm cli in Docker container
-RUN npm install
-# Copy source code from the current location
-# to the /app dir in Docker
-COPY . .
-# Expose the port # 5173
-EXPOSE 5173
-# Start the React development server in Docker
-CMD ["npm", "run", "dev"]
-```
-
-```docker
-#### 2. Backend: /server/Dockerfile ####
-# Three stages: base, development and production
-
-# Base stage
-# Build imagae from node
-FROM node:20-alpine as base
-# Create working directory in Docker
-WORKDIR /app
-# Copy package.json and package-lock.json from the current location
-# and paste to the working dir in Docker
-COPY package*.json /app
-# Expose the port #8000
-EXPOSE 8000
-
-# Development stage
-# It starts from base stage defined above
-FROM base as development
-# Set NODE_ENV variable as development
-ENV NODE_ENV=development
-# Download node_modules
-RUN npm install
-# Copy source code from the current location
-# and paste to the Docker working dir.
-COPY . .
-# Run the cli to build the client side.
-RUN npm run build
-
-# Production stage
-# Skip and explain in production chapter below.
-# FROM base as production
-# ENV NODE_ENV=production
-# RUN npm ci --only=production
-# COPY --from=development /app/dist ./dist
-# CMD ["node","dist/index.js"]
-
-```
-
-```docker
-#### 3. nginx: nginx/Dockerfile ####
-# Build container from nginx image
-FROM nginx
-# Copy /nginx/default.conf and paste it to /etc/nginx/conf.d/default.conf in container
-COPY ./default.conf /etc/nginx/conf.d/default.conf
-```
-
-```yml
-#### 4. Root Folder: docker-compose.dev yml ####
-version: "3"
-
-x-common-variables: &common-variables
-  DB_USERNAME: $DB_USERNAME
-  DB_PASSWORD: $DB_PASSWORD
-  DB_NAME: $DB_NAME
-  DB_PORT: $DB_PORT
-  DB_DOCKER_SERVICE_NAME: $DB_DOCKER_SERVICE_NAME
-
-services:
-  frontend:
-    container_name: hsl-frontend
-    build:
-      context: ./client
-      dockerfile: Dockerfile.dev
-    restart: unless-stopped
-    volumes:
-      - ./client:/app
-      - /app/node_modules
-    ports:
-      - "5173:5173"
-    depends_on:
-      - backend
-    networks:
-      - my-network
-
-  backend:
-    container_name: hsl-backend
-    # target is used to build a specific stage of ./server/Dockerfile
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-      target: development
-    restart: unless-stopped
-    volumes:
-      - ./server:/app
-      - /app/node_modules
-    environment:
-      NODE_ENV: development
-      DB_USERNAME: $DB_USERNAME
-      DB_PASSWORD: $DB_PASSWORD
-      DB_NAME: $DB_NAME
-      DB_PORT: $DB_PORT
-      DB_DOCKER_SERVICE_NAME: $DB_DOCKER_SERVICE_NAME
-    ports:
-      - "8000:8000"
-    depends_on:
-      - postgres
-    networks:
-      - my-network
-    # override command in Dockerfile
-    command: npm run serve
-
+```yaml
   postgres:
     image: postgres:latest
     container_name: hsl-postgres
@@ -235,34 +115,49 @@ services:
       - "5432:5432"
     volumes:
       - hsldata:/var/lib/postgresql/data
-    networks:
-      - my-network
-
-  nginx:
-    container_name: hsl-nginx
-    build:
-      context: ./nginx
-      dockerfile: Dockerfiledocker-compose.yml
-    depends_on:
-      - frontend
-      - backend
-    restart: always
-    # The app is working in the localhost:8008.
-    ports:
-      - "8008:80"
-    networks:
-      - my-network
-
-volumes:
-  hsldata:
-
-networks:
-  my-network:
 ```
+
+- The process #3: Nginx reverse proxy config is in `./client/nginx/default.conf`
+- The process #5: In `/server/src/db/data-source.ts` , the argements passed to DataSource has changed from
+
+```javascript
+export const AppDataSource = new DataSource({
+  type: "postgres",
+  host: process.env.DATABASE_HOST,
+  port: 5432,
+  username: process.env.DATABASE_USERNAME,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
+  entities: [Station, Route, Journey],
+});
+```
+
+to
+
+```javascript
+export const AppDataSource = new DataSource({
+  type: "postgres",
+  url: `postgres://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_DOCKER_SERVICE_NAME}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+  synchronize: true,
+  entities: [Station, Route, Journey],
+});
+```
+
+- The process #6: API URLs are changed in `/client/src/api/JourneyAPI.ts` and `/client/src/api/StationAPI.tsx` Read comments in the files.
 
 ## Production
 
-## Reference
+<p align="center">
+  <img width="800px" height="auto" src="./public/assets/docker-prod.jpg">
+</p>
+
+**NOTE**
+
+- Dockerfile and all configs are used in the production phase.
+- Process #7: Add `default.conf` in `/client/nginx` to serve the app in browsers.
+- Process #8: Create `docker-compose.yml` in the root directory
+
+## Docker Reference
 
 [English]
 
@@ -306,4 +201,4 @@ $ cd path-to-the-project-directory
 $ docker-compose -f docker-compose-dev.yml up --build
 ```
 
-- [ ] Connect to posgres local db and restore [the data](TODO: add file url later)
+- [ ] Download [the folder](https://metropoliafi-my.sharepoint.com/:f:/g/personal/chaeahp_metropolia_fi/Egq9M_hHMKNJsbhSqb5Sa0cBZC2CdGdP0jGgf2RuDud7Yg?e=kmH9NZ) and upzip it. Using the folder, restore the data in PgAdmin

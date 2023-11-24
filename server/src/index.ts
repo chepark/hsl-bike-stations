@@ -2,12 +2,9 @@ import "reflect-metadata";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 dotenv.config();
-import express, { Express, Request, Response } from "express";
+import express, { Express } from "express";
 import cors from "cors";
 import { AppDataSource } from "./db/data-source.js";
-import { Journey } from "./db/entity/Journey.js";
-import { Route } from "./db/entity/Route.js";
-import { Station } from "./db/entity/Station.js";
 import { journeyRoutes } from "./routes/journeyRoutes.js";
 import { stationRoutes } from "./routes/stationRoutes.js";
 

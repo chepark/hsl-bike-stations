@@ -71,7 +71,7 @@ services:
     container_name: hsl-nginx
     build:
       context: ./nginx
-      dockerfile: Dockerfiledocker-compose.yml
+      dockerfile: Dockerfile
     depends_on:
       - frontend
       - backend

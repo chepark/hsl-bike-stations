@@ -1,9 +1,16 @@
-# development stage 
+# Build image from node
 FROM node:20-alpine
+# Working directory in Docker
 WORKDIR /app
+# Copy the package.json from the current location
+# and paste to the working directory /app
 COPY package.json /app
+# Run the npm cli in Docker container
 RUN npm install
+# Copy source code from the current location
+# to the /app dir in Docker
 COPY . .
+# Expose the port # 5173
 EXPOSE 5173
+# Start the React development server in Docker
 CMD ["npm", "run", "dev"]
-
