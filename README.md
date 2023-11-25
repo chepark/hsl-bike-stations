@@ -6,7 +6,7 @@ Using the [open data](https://www.hsl.fi/en/hsl/open-data) from Helsinki Region 
 
 # Technologies
 
-- Frontend: React, TypeScript, Redux, TailwindCSS, Vite, (Vitest, Jest: currently working on)
+- Frontend: React, TypeScript, Redux, TailwindCSS, Vite, Vitest, Jest
 - Backend: Node, Express, Typescript, TypeORM
 - Database: PostgreSQL, PgAdmin
 - Etc: Docker, NginX, Leaflet-OpenStreetMap API
@@ -28,7 +28,7 @@ In development, Nginx attached to the frontend (on the picture above) does not e
 - [x] List the journeys with pagination
 - [x] Search journeys by station names
 - [x] Filter journeys by setting the range of duration and distance
-- [x] Order the list of journeys by columns (departure station, return station, duration and distanace)
+- [x] Sort the data on journey table when clicking each column (departure station, return station, duration and distanace)
 
 ## Station page
 
