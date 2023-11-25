@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Pagination from '../components/Pagination';
+import Pagination from '../src/components/Pagination';
 import { MemoryRouter } from 'react-router-dom'; // it is needed for useSearchParams
 
 describe('Pagination', () => {

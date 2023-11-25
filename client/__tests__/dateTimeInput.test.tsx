@@ -1,4 +1,4 @@
-import DateTimeInput from '../components/DateTimeInput.js';
+import DateTimeInput from '../src/components/DateTimeInput';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import SearchFilter from '../components/SearchFilter';
+import SearchFilter from '../src/components/SearchFilter';
 
 describe('SearchFilter', () => {
   it('should display label.', () => {
