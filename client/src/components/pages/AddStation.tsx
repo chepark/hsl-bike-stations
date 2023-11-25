@@ -3,12 +3,8 @@ import { getNewStationCoordinates } from '../../api/StationAPI';
 import Form from '../Form';
 import SelectInput from '../SelectInput';
 import TextInput from '../TextInput';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-
-import {
-  addNewStation,
-  selectStationsStatus,
-} from '../../store/reducers/stationSlice';
+import { useAppDispatch } from '../../store/hooks';
+import { addNewStation } from '../../store/reducers/stationSlice';
 
 function AddStation() {
   const [inputValues, setInputValues] = useState({
@@ -20,7 +16,6 @@ function AddStation() {
   const [error, setError] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
-  const status = useAppSelector(selectStationsStatus);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -90,8 +85,7 @@ function AddStation() {
         </Form>
       )}
       {/* form submit and no error ? show success message */}
-
-      {status === 'succeeded' && <div>successfully added</div>}
+      {isFormSubmit && <div>successfully added</div>}
       {/* form submit and error ? show error message */}
       {error && <div>Failed to add a new station ...</div>}
     </div>
