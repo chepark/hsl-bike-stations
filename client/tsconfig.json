@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": [".eslintrc.cjs", "src", "__tests__"],
+  "include": [".eslintrc.cjs", "src", "__tests__", "setupTest.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
