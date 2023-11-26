@@ -1,0 +1,13 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deployment_pipeline:
+    runs-on: home-asus
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
