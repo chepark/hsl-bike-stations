@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render, fireEvent, screen } from '@testing-library/react';
-import Form from '../components/Form';
+import Form from '../src/components/Form';
 
 describe('Form', () => {
   it('should render children', () => {
