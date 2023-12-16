@@ -63,8 +63,19 @@ function Journeys() {
   }, [fetchWithFilter]);
 
   useEffect(() => {
-    setDistanceQuery([distanceRange.min, distanceRange.max]);
-    setDurationQuery([durationRange.min, durationRange.max]);
+    if (distanceQuery[0] !== 0 || distanceQuery[1] !== 0) {
+      setDistanceQuery([distanceQuery[0], distanceQuery[1]]);
+    } else if (distanceQuery[0] === 0 && distanceQuery[1] === 0) {
+      setDistanceQuery([distanceRange.min, distanceRange.max]);
+    }
+
+    if (durationQuery[0] !== 0 || durationQuery[1] !== 0) {
+      setDurationQuery([durationQuery[0], durationQuery[1]]);
+    } else if (durationQuery[0] === 0 && durationQuery[1] === 0) {
+      setDurationQuery([durationRange.min, durationRange.max]);
+    }
+    // setDistanceQuery([distanceRange.min, distanceRange.max]);
+    // setDurationQuery([durationRange.min, durationRange.max]);
   }, [durationRange, distanceRange]);
 
   const filters = [
