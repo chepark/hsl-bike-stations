@@ -60,6 +60,7 @@ function Journeys() {
       );
       setFetchWithFilter(false);
     }
+    console.log('test github actions');
   }, [fetchWithFilter]);
 
   useEffect(() => {

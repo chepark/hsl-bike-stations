@@ -12,6 +12,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: run test script
+      - name: Pull source code and run Docker container
         run: |
-          echo "Running test script"
+          cd
+          cd Documents/dingding
+          git pull
+          docker stop $(docker ps -a -q)
+          docker rm $(docker ps -a -q)
+          docker rmi $(docker images -q)
+          systemctl stop postgresql
+          docker-compose up --build -d
