@@ -17,7 +17,15 @@ jobs:
           cd
           cd Documents/dingding
           git pull
-          docker stop $(docker ps -a -q)
+          echo "#####Stopping containers#####"
+          CONTAINERS=$(docker ps -a -q)
+          if [ -n "$CONTAINERS" ]; then
+            docker stop $CONTAINERS
+            docker rm $CONTAINERS
+          else
+            echo "No containers to stop"
+          fi
+          echo "#####Removing containers#####"
           docker rm $(docker ps -a -q)
           docker rmi $(docker images -q)
           docker-compose up --build -d
