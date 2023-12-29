@@ -22,10 +22,8 @@ jobs:
           if [ -n "$CONTAINERS" ]; then
             docker stop $CONTAINERS
             docker rm $CONTAINERS
+            docker rmi $(docker images -q)
           else
             echo "No containers to stop"
-          fi
-          echo "#####Removing containers#####"
-          docker rm $(docker ps -a -q)
-          docker rmi $(docker images -q)
+          fi    
           docker-compose up --build -d
