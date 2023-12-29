@@ -26,4 +26,4 @@ jobs:
           else
             echo "No containers to stop"
           fi    
-          docker-compose up --build -d
+          docker compose up --build -d
