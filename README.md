@@ -188,7 +188,7 @@ export const AppDataSource = new DataSource({
 - [ ] Handle fallback (404 and 502 pages)
 - [ ] Add test code on the server side
 - [ ] Implement AddJouney page
-- [ ] Integrate Docker to CI CD
+- [x] Integrate Docker to CI CD
 - [ ] Deploy with SSL certificate
 
 # Run locally

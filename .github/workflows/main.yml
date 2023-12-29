@@ -17,11 +17,13 @@ jobs:
           cd
           cd Documents/dingding
           git pull
-          echo "#####Stopping containers#####"
           CONTAINERS=$(docker ps -a -q)
           if [ -n "$CONTAINERS" ]; then
+            echo "Stop Docker containers"
             docker stop $CONTAINERS
+            echo "Remove Docker containers"
             docker rm $CONTAINERS
+            echo "Remove Docker images"
             docker rmi $(docker images -q)
           else
             echo "No containers to stop"
